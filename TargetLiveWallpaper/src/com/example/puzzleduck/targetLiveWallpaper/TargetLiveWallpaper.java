@@ -43,10 +43,14 @@ import android.view.SurfaceHolder;
  * defined in resources instead of in code.
  */
 
+
 public class TargetLiveWallpaper extends WallpaperService {
 
     public static final String SHARED_PREFS_NAME="cube2settings";
 
+    
+    
+    //yrst
     static class ThreeDPoint {
         float x;
         float y;
