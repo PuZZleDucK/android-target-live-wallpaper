@@ -16,7 +16,7 @@
 
 package com.example.puzzleduck.targetLiveWallpaper;
 
-import com.example.android.livecubes.R;
+import com.example.puzzleduck.targetLiveWallpaper.R;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
