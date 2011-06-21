@@ -257,7 +257,7 @@ public class TargetLiveWallpaper extends WallpaperService {
                     // draw something
                     
                     drawTouchPoint(c);
-                    drawConkey(c);
+//                    drawConkey(c);
                     drawTopTarget(c);
                     drawLeftTarget(c);
                 }
