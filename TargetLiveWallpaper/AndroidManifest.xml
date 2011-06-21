@@ -28,7 +28,7 @@
 
     <application
         android:label="@string/wallpapers"
-        android:icon="@drawable/ic_launcher_wallpaper" android:debuggable="false">
+        android:debuggable="false" android:icon="@drawable/target_lwp_icon">
 
         
 

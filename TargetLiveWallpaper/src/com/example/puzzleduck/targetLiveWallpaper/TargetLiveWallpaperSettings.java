@@ -35,7 +35,7 @@ public class TargetLiveWallpaperSettings extends PreferenceActivity
                 this);
     }
 
-    @Override
+    @Override 
     protected void onResume() {
         super.onResume();
     }

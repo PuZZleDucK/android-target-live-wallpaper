@@ -27,7 +27,7 @@
     <string name="wallpaper_cube1">Cube</string>
 
     <!-- Wallpaper showing a cube or dodecahedron, data read from resource -->
-    <string name="wallpaper_cube2">Cube - resource</string>
+    <string name="wallpaper_cube2">Target Live Wallpaper</string>
 
     <!-- Wallpaper showing a cube, renderscript version -->
     <string name="wallpaper_cube3">Cube - RenderScript</string>

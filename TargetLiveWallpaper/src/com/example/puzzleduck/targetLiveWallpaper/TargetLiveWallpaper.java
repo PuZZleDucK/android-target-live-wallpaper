@@ -261,7 +261,7 @@ public class TargetLiveWallpaper extends WallpaperService {
                     drawTopTarget(c);
                     drawLeftTarget(c);
                 }
-            } finally {
+            } finally { 
                 if (c != null) holder.unlockCanvasAndPost(c);
             }
 
