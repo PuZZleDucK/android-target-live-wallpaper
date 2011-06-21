@@ -28,7 +28,7 @@
 
     <application
         android:label="@string/wallpapers"
-        android:icon="@drawable/ic_launcher_wallpaper" android:debuggable="true">
+        android:icon="@drawable/ic_launcher_wallpaper" android:debuggable="false">
 
         
 
@@ -49,8 +49,5 @@
         </activity>
 
     </application>
-
-
-<permission android:name="android.permission.CAMERA" android:label="Camera" android:icon="@drawable/ic_launcher_wallpaper" android:description="@string/wallpaper_cube1"></permission>
 
 </manifest>
