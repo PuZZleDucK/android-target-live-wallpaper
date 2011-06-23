@@ -46,7 +46,7 @@ import android.view.SurfaceHolder;
 
 public class TargetLiveWallpaper extends WallpaperService {
 
-    public static final String SHARED_PREFS_NAME="cube2settings";
+    public static final String SHARED_PREFS_NAME="target_lwp_settings";
 
     
     static class ThreeDPoint {
@@ -118,9 +118,9 @@ public class TargetLiveWallpaper extends WallpaperService {
             final Paint paint = mPaint;
             paint.setColor(0xffffffff);
             paint.setAntiAlias(true);
-            paint.setStrokeWidth(2);
+            paint.setStrokeWidth(4);//increased stroke
             paint.setStrokeCap(Paint.Cap.ROUND);
-            paint.setStyle(Paint.Style.STROKE);
+            paint.setStyle(Paint.Style.STROKE); 
 
 //            mStartTime = SystemClock.elapsedRealtime();
 
@@ -254,6 +254,8 @@ public class TargetLiveWallpaper extends WallpaperService {
                 if (c != null) {
                     // draw something
                     
+                	
+                	//TODO: add case for each component
                     drawTouchPoint(c);
 //                    drawConkey(c);
                     drawTopTarget(c);
@@ -380,22 +382,27 @@ public class TargetLiveWallpaper extends WallpaperService {
 
             c.drawColor(0xff000000);
             int oldColor = mPaint.getColor();
-            for(int i = 0; i < 6; i++)
+            int numberOfRings = 16;
+            for(int i = 0; i < numberOfRings; i++)
             {
-                mPaint.setColor(0xffff0000-(0x22000000 * ((i-mPulseN)%8) ));
-                c.drawCircle(mLastTouchX, mLastTouchY, 12 * i, mPaint);
+                mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
+                c.drawCircle(mLastTouchX, mLastTouchY, 8 * i, mPaint);
             }
             mPaint.setColor(oldColor);
-
+//adding conditional to finish animation... YAY
+            if (mPulseN > 0)
+            {
+            	--mPulseN;
+            }
+            
             if (mTouchX >=0 && mTouchY >= 0) {                
 
-            	if(--mPulseN <= 0)
-            		mPulseN = 8;
+            	if(mPulseN <= 0)
+            		mPulseN = numberOfRings;
                     
                 // get relative dirs
                 float diffX = mTouchX - mLastTouchX;
                 float diffY = mTouchY - mLastTouchY;
-
                 mCenterY1 = mCenterY1 + diffY;
                 mCenterX1 = mCenterX1 + diffX;
                 
@@ -404,10 +411,9 @@ public class TargetLiveWallpaper extends WallpaperService {
                 mLastTouchY = mTouchY;
 
                 
-                c.drawText("diffX = " + diffX, 5, 650, mPaint);
-                c.drawText("diffY = " + diffY, 5, 670, mPaint);
             }else{
-            	mPulseN = 0;
+//            	mPulseN = 0; //reset?
+//            	mPulseN = 0; //reset?
             }
             
         }
@@ -435,7 +441,9 @@ public class TargetLiveWallpaper extends WallpaperService {
             c.drawText("mCenterX1= " + mCenterX1, 5, 690, mPaint);
             c.drawText("mCenterY1= " + mCenterY1, 5, 710, mPaint);
             mPaint.setColor(oldColor);
-            
+
+//          c.drawText("diffX = " + diffX, 5, 650, mPaint);
+//          c.drawText("diffY = " + diffY, 5, 670, mPaint); //oops... this should be in conkey if anywhere.
         }
         
     }
