@@ -28,9 +28,8 @@ public class TargetLiveWallpaperSettings extends PreferenceActivity
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        getPreferenceManager().setSharedPreferencesName(
-                TargetLiveWallpaper.SHARED_PREFS_NAME);
-        addPreferencesFromResource(R.xml.cube2_settings);
+        getPreferenceManager().setSharedPreferencesName(TargetLiveWallpaper.SHARED_PREFS_NAME);
+        addPreferencesFromResource(R.xml.target_lwp_settings);
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(
                 this);
     }

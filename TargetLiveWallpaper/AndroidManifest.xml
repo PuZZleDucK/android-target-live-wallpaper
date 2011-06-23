@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/*
+/* 
 **
 ** Copyright 2009, The Android Open Source Project
 **
@@ -39,7 +39,7 @@
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
             </intent-filter>
-            <meta-data android:name="android.service.wallpaper" android:resource="@xml/cube2" />
+            <meta-data android:name="android.service.wallpaper" android:resource="@xml/target_lwp" />
         </service>
         <activity
             android:label="@string/cube2_settings"
