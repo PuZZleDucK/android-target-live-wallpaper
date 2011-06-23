@@ -24,15 +24,13 @@
     <string name="wallpapers">Target Live Wallpaper</string>
 
     <!-- Wallpaper showing a cube -->
-    <string name="wallpaper_cube1">Cube</string>
 
     <!-- Wallpaper showing a cube or dodecahedron, data read from resource -->
-    <string name="wallpaper_cube2">Target Live Wallpaper</string>
 
     <!-- Wallpaper showing a cube, renderscript version -->
-    <string name="wallpaper_cube3">Cube - RenderScript</string>
 
-    <string name="cube2_settings">Settings</string>
-    <string name="cube2_settings_title">Select shape</string>
-    <string name="cube2_settings_summary">Choose whether to display a cube or a dodecahedron</string>
+    <string name="target_settings">Settings</string>
+    <string name="target_settings_title">Select shape</string>
+    <string name="target_settings_summary">Choose whether to display a cube or a dodecahedron</string>
+    <string name="target_wallpaper_service_label">Target Live Wallpaper</string>
 </resources>

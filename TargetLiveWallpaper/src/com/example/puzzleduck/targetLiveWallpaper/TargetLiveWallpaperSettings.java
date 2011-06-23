@@ -26,12 +26,11 @@ public class TargetLiveWallpaperSettings extends PreferenceActivity
     implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
-    protected void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
+    protected void onCreate(Bundle newBundle) {
+        super.onCreate(newBundle);
         getPreferenceManager().setSharedPreferencesName(TargetLiveWallpaper.SHARED_PREFS_NAME);
         addPreferencesFromResource(R.xml.target_lwp_settings);
-        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(
-                this);
+        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override 
@@ -41,8 +40,7 @@ public class TargetLiveWallpaperSettings extends PreferenceActivity
 
     @Override
     protected void onDestroy() {
-        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(
-                this);
+        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         super.onDestroy();
     }
 

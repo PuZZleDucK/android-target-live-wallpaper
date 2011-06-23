@@ -33,7 +33,7 @@
         
 
         <service
-            android:label="@string/wallpaper_cube2"
+            android:label="@string/target_wallpaper_service_label"
             android:name="com.example.puzzleduck.targetLiveWallpaper.TargetLiveWallpaper"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
@@ -42,7 +42,7 @@
             <meta-data android:name="android.service.wallpaper" android:resource="@xml/target_lwp" />
         </service>
         <activity
-            android:label="@string/cube2_settings"
+            android:label="@string/target_settings"
             android:name="com.example.puzzleduck.targetLiveWallpaper.TargetLiveWallpaperSettings"
             android:theme="@android:style/Theme.Light.WallpaperSettings"
             android:exported="true">

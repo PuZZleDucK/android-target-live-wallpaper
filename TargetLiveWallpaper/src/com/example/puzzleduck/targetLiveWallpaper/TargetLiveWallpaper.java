@@ -49,8 +49,6 @@ public class TargetLiveWallpaper extends WallpaperService {
     public static final String SHARED_PREFS_NAME="cube2settings";
 
     
-    
-    //yrst
     static class ThreeDPoint {
         float x;
         float y;
@@ -74,10 +72,10 @@ public class TargetLiveWallpaper extends WallpaperService {
 
     @Override
     public Engine onCreateEngine() {
-        return new CubeEngine();
+        return new TargetEngine();
     }
 
-    class CubeEngine extends Engine 
+    class TargetEngine extends Engine 
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private final Handler mHandler = new Handler();
@@ -115,7 +113,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         private boolean mVisible;
         private SharedPreferences mPrefs;
 
-        CubeEngine() {
+        TargetEngine() {
             // Create a Paint to draw the lines for our cube
             final Paint paint = mPaint;
             paint.setColor(0xffffffff);
