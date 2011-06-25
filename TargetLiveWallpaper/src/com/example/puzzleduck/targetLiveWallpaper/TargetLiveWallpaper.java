@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.service.wallpaper.WallpaperService;
@@ -103,7 +104,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         private float mLastTouchX = 0;
         private float mLastTouchY = 0;
         
-        private int mPulseN = 8;
+        private int mPulseN = 0;
 
         private final Runnable mDrawCube = new Runnable() {
             public void run() {
@@ -257,6 +258,7 @@ public class TargetLiveWallpaper extends WallpaperService {
                 	
                 	//TODO: add case for each component
                     drawTouchPoint(c);
+                    drawTouchCycle(c);
 //                    drawConkey(c);
                     drawTopTarget(c);
                     drawLeftTarget(c);
@@ -419,6 +421,59 @@ public class TargetLiveWallpaper extends WallpaperService {
         }
         
 
+
+        void drawTouchCycle(Canvas c) {
+
+            c.drawColor(0x0000ff00);
+            int oldColor = mPaint.getColor();
+            int numberOfRings = 1;
+            int startRings = 24;
+            int widthOfRings = 12 + startRings;
+            for(int i = startRings; i < widthOfRings; i++)
+            {
+//                mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
+//                c.drawCircle(mLastTouchX, mLastTouchY, 8 + i, mPaint);
+            	int startAngle = 0;
+            	float sweepAngle = 0.05f;
+            	boolean useCenter = false;
+            	
+                c.drawArc(new RectF(mLastTouchX - i,mLastTouchY - i, mLastTouchX + i, mLastTouchY + i), startAngle, sweepAngle*SystemClock.uptimeMillis()%360, useCenter, mPaint);
+            }
+            mPaint.setColor(oldColor);
+//adding conditional to finish animation... YAY
+            if (mPulseN > 0)
+            {
+            	--mPulseN;
+            }
+            
+            if (mTouchX >=0 && mTouchY >= 0) {                
+
+            	if(mPulseN <= 0)
+            		mPulseN = numberOfRings;
+                    
+                // get relative dirs
+                float diffX = mTouchX - mLastTouchX;
+                float diffY = mTouchY - mLastTouchY;
+                mCenterY1 = mCenterY1 + diffY;
+                mCenterX1 = mCenterX1 + diffX;
+                
+                //store for next
+                mLastTouchX = mTouchX;
+                mLastTouchY = mTouchY;
+
+                
+            }else{
+//            	mPulseN = 0; //reset?
+//            	mPulseN = 0; //reset?
+            }
+            
+        }
+         
+
+        
+        
+        
+        
         void drawConkey(Canvas c) {
             c.drawColor(0x00000000);
 
