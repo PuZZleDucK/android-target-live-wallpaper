@@ -27,11 +27,14 @@
 
 package com.example.puzzleduck.targetLiveWallpaper;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.service.wallpaper.WallpaperService;
@@ -106,6 +109,16 @@ public class TargetLiveWallpaper extends WallpaperService {
         
         private int mPulseN = 0;
 
+
+        private boolean leftOn = false;
+        private boolean topOn = false;
+        private boolean quadOn = true;
+        private boolean discOn = true;
+        private boolean pulseOn = false;
+        private boolean conkeyOn = false;
+        
+        
+        
         private final Runnable mDrawCube = new Runnable() {
             public void run() {
                 drawFrame();
@@ -132,10 +145,75 @@ public class TargetLiveWallpaper extends WallpaperService {
 
         public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 
-            String shape = prefs.getString("cube2_shape", "cube");
-
+            String shape = prefs.getString("target_shape", "diamond");
+            leftOn = prefs.getBoolean("target_left_on", false);
+            topOn = prefs.getBoolean("target_top_on", false);
+            discOn = prefs.getBoolean("target_disc_on", true);
+            quadOn = prefs.getBoolean("target_quad_on", true);
+            pulseOn = prefs.getBoolean("target_pulse_on", false);
             // read the 3D model from the resource
             readModel(shape);
+            
+            
+            
+            
+            
+            
+
+//			final ColorPickerDialog d = new ColorPickerDialog(this, prefs
+//					.getInt("dialog", 0xffffffff));
+//			d.setAlphaSliderVisible(true);
+//
+//			d.setButton("Ok", new DialogInterface.OnClickListener() {
+//
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//
+//					SharedPreferences.Editor editor = prefs.edit();
+//					editor.putInt("dialog", d.getColor());
+//					editor.commit();
+//
+//				}
+//			});
+//
+//			d.setButton2("Cancel", new DialogInterface.OnClickListener() {
+//
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//
+//				}
+//			});
+//
+//			d.show();
+//
+//			return true;
+//		} else if (key.equals("activity")) {
+//
+//			Intent i = new Intent(this, ColorPickerActivity.class);
+//			i.putExtra(ColorPickerActivity.INTENT_DATA_INITIAL_COLOR, prefs
+//					.getInt("activity", 0xff000000));
+//			startActivityForResult(i, ACTIVITY_COLOR_PICKER_REQUEST_CODE);
+//
+//			return true;
+//		}
+//		else if(key.equals("source_code")){
+//			Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://code.google.com/p/color-picker-view/"));
+//			startActivity(i);
+//		}
+
+//		return false;
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }
 
         private void readModel(String prefix) {
@@ -258,12 +336,34 @@ public class TargetLiveWallpaper extends WallpaperService {
                 	
                 	//TODO: add case for each component
                   updateTouchPoint(c);
-//                  drawTouchPoint(c);
-                    drawTouchCycle(c);
-//                    drawConkey(c);
-//                    drawTopTarget(c);
-//                    drawLeftTarget(c);
-                    drawAdvancedTarget(c);
+                  
+                  
+                if(pulseOn)
+                  {
+                        drawTouchPointPulse(c);
+                  }
+                  if(discOn)
+                  {
+                      drawTouchDisc(c);
+//                      
+                  }   
+                  
+//                  drawConkey(c);
+                    if(topOn)
+                    {
+                    	drawTopTarget(c);
+                    }
+                    if(leftOn)
+                    {
+                    	drawLeftTarget(c);
+                    }
+
+                    if(quadOn)
+                    {
+                    	drawQuadTarget(c);	
+                    }
+                    
+                    
                 }
             } finally { 
                 if (c != null) holder.unlockCanvasAndPost(c);
@@ -275,7 +375,7 @@ public class TargetLiveWallpaper extends WallpaperService {
             }
         }
         
-        void drawAdvancedTarget(Canvas c) {
+        void drawQuadTarget(Canvas c) {
             c.save();
             c.drawColor(0x00000000);
             int oldColor = mPaint.getColor();
@@ -520,7 +620,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         }
         
         
-        void drawTouchPoint(Canvas c) {
+        void drawTouchPointPulse(Canvas c) {
 //need to strip out touch detection... should not happen in draw.
             
 //            int oldColor = mPaint.getColor();
@@ -547,7 +647,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         
 
 
-        void drawTouchCycle(Canvas c) {
+        void drawTouchDisc(Canvas c) {
 
             int oldColor = mPaint.getColor();
             c.drawColor(0x0000ff00);
