@@ -433,39 +433,41 @@ public class TargetLiveWallpaper extends WallpaperService {
             {
 //                mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
 //                c.drawCircle(mLastTouchX, mLastTouchY, 8 + i, mPaint);
-            	int startAngle = 0;
-            	float sweepAngle = 0.05f;
+            	float startAngle = 0.1f;
+            	float sweepAngle = 45.00f;
             	boolean useCenter = false;
             	
-                c.drawArc(new RectF(mLastTouchX - i,mLastTouchY - i, mLastTouchX + i, mLastTouchY + i), startAngle, sweepAngle*SystemClock.uptimeMillis()%360, useCenter, mPaint);
+                c.drawArc(new RectF(mLastTouchX - i,mLastTouchY - i, mLastTouchX + i, mLastTouchY + i), startAngle*SystemClock.uptimeMillis()%360, sweepAngle, useCenter, mPaint);
+                c.drawArc(new RectF(mLastTouchX - i,mLastTouchY - i, mLastTouchX + i, mLastTouchY + i), (startAngle*SystemClock.uptimeMillis()+180)%360, sweepAngle*2, useCenter, mPaint);
+                c.drawArc(new RectF(mLastTouchX - (i+30),mLastTouchY - (i+30), mLastTouchX + (i+30), mLastTouchY + (i+30)), startAngle*SystemClock.uptimeMillis()%360, sweepAngle*4, useCenter, mPaint);
             }
             mPaint.setColor(oldColor);
 //adding conditional to finish animation... YAY
-            if (mPulseN > 0)
-            {
-            	--mPulseN;
-            }
-            
-            if (mTouchX >=0 && mTouchY >= 0) {                
-
-            	if(mPulseN <= 0)
-            		mPulseN = numberOfRings;
-                    
-                // get relative dirs
-                float diffX = mTouchX - mLastTouchX;
-                float diffY = mTouchY - mLastTouchY;
-                mCenterY1 = mCenterY1 + diffY;
-                mCenterX1 = mCenterX1 + diffX;
-                
-                //store for next
-                mLastTouchX = mTouchX;
-                mLastTouchY = mTouchY;
-
-                
-            }else{
-//            	mPulseN = 0; //reset?
-//            	mPulseN = 0; //reset?
-            }
+//            if (mPulseN > 0)
+//            {
+//            	--mPulseN;
+//            }
+//            
+//            if (mTouchX >=0 && mTouchY >= 0) {                
+//
+//            	if(mPulseN <= 0)
+//            		mPulseN = numberOfRings;
+//                    
+//                // get relative dirs
+//                float diffX = mTouchX - mLastTouchX;
+//                float diffY = mTouchY - mLastTouchY;
+//                mCenterY1 = mCenterY1 + diffY;
+//                mCenterX1 = mCenterX1 + diffX;
+//                
+//                //store for next
+//                mLastTouchX = mTouchX;
+//                mLastTouchY = mTouchY;
+//
+//                
+//            }else{
+////            	mPulseN = 0; //reset?
+////            	mPulseN = 0; //reset?
+//            }
             
         }
          
