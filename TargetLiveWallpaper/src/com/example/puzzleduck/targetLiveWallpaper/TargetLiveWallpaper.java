@@ -199,7 +199,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
             mCenterX1 = 0;//width/2; 
-            mCenterY1 = 0;//height/2;
+            mCenterY1 = height/2;
             mLeftTargetX = width/2;
             mLeftTargetY = height/2;
             mTopTargetX = width/2;
@@ -257,11 +257,13 @@ public class TargetLiveWallpaper extends WallpaperService {
                     
                 	
                 	//TODO: add case for each component
-                    drawTouchPoint(c);
+                  updateTouchPoint(c);
+//                  drawTouchPoint(c);
                     drawTouchCycle(c);
 //                    drawConkey(c);
-                    drawTopTarget(c);
-                    drawLeftTarget(c);
+//                    drawTopTarget(c);
+//                    drawLeftTarget(c);
+                    drawAdvancedTarget(c);
                 }
             } finally { 
                 if (c != null) holder.unlockCanvasAndPost(c);
@@ -272,7 +274,49 @@ public class TargetLiveWallpaper extends WallpaperService {
                 mHandler.postDelayed(mDrawCube, 1000 / 25);
             }
         }
+        
+        void drawAdvancedTarget(Canvas c) {
+            c.save();
+            c.drawColor(0x00000000);
+            int oldColor = mPaint.getColor();
+            mPaint.setColor(0xff00ff00);
 
+            long now = SystemClock.elapsedRealtime();
+
+            float xrot = (float) now/400;
+            float yrot = (float) now/400;
+//            rotateAndProjectPoints3(xrot, yrot);
+            
+            mPaint.setColor(0xFFFFFFFF-(0x000001 * ((int)now)/5 ));
+            //mPaint.setColor(Color.argb(255,255-((int)now/5%200),0,0));       //0-255 or 0xAARRGGBB
+            //argb(int alpha, int red, int green, int blue)
+            
+            mLeftTargetX = mLastTouchX;
+            mLeftTargetY = mLastTouchY;
+            int targeDistance = 190;
+	        
+
+	        rotateAndProjectPointsRight(xrot, 0);            
+            c.translate(mLeftTargetX+targeDistance, mLeftTargetY);
+	        drawLines(c);//RIGHT            
+
+	        rotateAndProjectPointsLeft(xrot, 0);            
+            c.translate(-targeDistance*2, 0);
+	        drawLines(c);//left
+	        
+
+	        rotateAndProjectPointsBottom(0, yrot);            
+            c.translate(targeDistance, targeDistance);
+	        drawLines(c);//low
+	        rotateAndProjectPointsTop(0, yrot);            
+            c.translate(0, -targeDistance*2);
+	        drawLines(c);//high
+	        
+
+            mPaint.setColor(oldColor);
+          	c.restore(); 
+       }
+        
         void drawTopTarget(Canvas c) {
             c.save();
             c.drawColor(0x00000000);
@@ -282,7 +326,7 @@ public class TargetLiveWallpaper extends WallpaperService {
             long now = SystemClock.elapsedRealtime();
             float xrot = (float)0;
             float yrot = (float)now/400;
-            rotateAndProjectPoints(xrot, yrot);
+            rotateAndProjectPointsTop(xrot, yrot);
 
             mTopTargetX = mLastTouchX;
             mTopTargetY = 60;
@@ -302,7 +346,7 @@ public class TargetLiveWallpaper extends WallpaperService {
             long now = SystemClock.elapsedRealtime();
             float xrot = (float) now/400;
             float yrot = (float) 0;
-            rotateAndProjectPoints2(xrot, yrot);
+            rotateAndProjectPointsLeft(xrot, yrot);
 
             
             mPaint.setColor(0xFFFFFFFF-(0x00000001 * ((int)now)/5 ));
@@ -321,7 +365,7 @@ public class TargetLiveWallpaper extends WallpaperService {
 
         
         
-        void rotateAndProjectPoints(float xrot, float yrot) {
+        void rotateAndProjectPointsTop(float xrot, float yrot) {
             int n = mOriginalPoints.length;
             for (int i = 0; i < n; i++) {
                 // rotation around X-axis
@@ -344,8 +388,81 @@ public class TargetLiveWallpaper extends WallpaperService {
                 mRotatedPoints[i].y = screenY;
                 mRotatedPoints[i].z = 0;
             }
+        }                
+        void rotateAndProjectPointsBottom(float xrot, float yrot) {
+            int n = mOriginalPoints.length;
+//            xrot-=1.0f;
+            for (int i = 0; i < n; i++) {
+                // rotation around X-axis
+                ThreeDPoint p = mOriginalPoints[i];
+                float x = p.x;
+                float y = 1-p.y;
+                float z = p.z;
+                float newy = (float)(Math.sin(xrot) * z + Math.cos(xrot) * y);
+                float newz = (float)(Math.cos(xrot) * z - Math.sin(xrot) * y);
+
+                // rotation around Y-axis
+                float newx = (float)(Math.sin(yrot) * newz + Math.cos(yrot) * x);
+                newz = (float)(Math.cos(yrot) * newz - Math.sin(yrot) * x);
+
+                // 3D-to-2D projection
+                float screenX = newx / (4 - newz / 400);
+                float screenY = newy / (4 - newz / 400);
+
+                mRotatedPoints[i].x = screenX;
+                mRotatedPoints[i].y = screenY;
+                mRotatedPoints[i].z = 0;
+            }
         }        
-        void rotateAndProjectPoints2(float xrot, float yrot) {
+        void rotateAndProjectPointsLeft(float xrot, float yrot) {
+            int n = mOriginalPoints.length;
+            for (int i = 0; i < n; i++) {
+                // rotation around X-axis
+                ThreeDPoint p = mOriginalPoints[i];
+                float y = p.x;
+                float x = p.y;
+                float z = p.z;
+                float newy = (float)(Math.sin(xrot) * z + Math.cos(xrot) * y);
+                float newz = (float)(Math.cos(xrot) * z + Math.sin(xrot) * y);
+
+                // rotation around Y-axis
+                float newx = (float)(Math.sin(yrot) * newz + Math.cos(yrot) * x);
+                newz = (float)(Math.cos(yrot) * newz + Math.sin(yrot) * x);
+
+                // 3D-to-2D projection
+                float screenX = newx / (4 - newz / 400);
+                float screenY = newy / (4 - newz / 400);
+
+                mRotatedPoints[i].x = screenX;
+                mRotatedPoints[i].y = screenY;
+                mRotatedPoints[i].z = 0;
+            }
+        }        
+        void rotateAndProjectPointsRight(float xrot, float yrot) {
+            int n = mOriginalPoints.length;
+            for (int i = 0; i < n; i++) {
+                // rotation around X-axis
+                ThreeDPoint p = mOriginalPoints[i];
+                float y = p.x;
+                float x = 1-p.y;
+                float z = 1-p.z;
+                float newy = (float)(Math.sin(xrot) * z + Math.cos(xrot) * y);
+                float newz = (float)(Math.cos(xrot) * z + Math.sin(xrot) * y);
+
+                // rotation around Y-axis
+                float newx = (float)(Math.sin(yrot) * newz + Math.cos(yrot) * x);
+                newz = (float)(Math.cos(yrot) * newz + Math.sin(yrot) * x);
+
+                // 3D-to-2D projection
+                float screenX = newx / (4 - newz / 400);
+                float screenY = newy / (4 - newz / 400);
+
+                mRotatedPoints[i].x = screenX;
+                mRotatedPoints[i].y = screenY;
+                mRotatedPoints[i].z = 0;
+            }
+        }        
+        void rotateAndProjectPoints3(float xrot, float yrot) {
             int n = mOriginalPoints.length;
             for (int i = 0; i < n; i++) {
                 // rotation around X-axis
@@ -380,17 +497,39 @@ public class TargetLiveWallpaper extends WallpaperService {
             }
         }
 
-        void drawTouchPoint(Canvas c) {
+        
+        
+        
+        void updateTouchPoint(Canvas c) {
+//need to strip out touch detection... should not happen in draw.
+        	   if (mTouchX >=0 && mTouchY >= 0) {                
 
-            c.drawColor(0xff000000);
-            int oldColor = mPaint.getColor();
+        	
+	        	// get relative dirs
+	                float diffX = mTouchX - mLastTouchX;
+	                float diffY = mTouchY - mLastTouchY;
+	                mCenterY1 = mCenterY1 + diffY;
+	                mCenterX1 = mCenterX1 + diffX;
+	                
+	                //store for next
+	                mLastTouchX = mTouchX;
+	                mLastTouchY = mTouchY;            
+        	   }
+//               mPaint.setColor(0);//clear frame
+        	   c.drawColor(0xff000000);   
+        }
+        
+        
+        void drawTouchPoint(Canvas c) {
+//need to strip out touch detection... should not happen in draw.
+            
+//            int oldColor = mPaint.getColor();
             int numberOfRings = 16;
             for(int i = 0; i < numberOfRings; i++)
             {
                 mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
                 c.drawCircle(mLastTouchX, mLastTouchY, 8 * i, mPaint);
             }
-            mPaint.setColor(oldColor);
 //adding conditional to finish animation... YAY
             if (mPulseN > 0)
             {
@@ -402,20 +541,6 @@ public class TargetLiveWallpaper extends WallpaperService {
             	if(mPulseN <= 0)
             		mPulseN = numberOfRings;
                     
-                // get relative dirs
-                float diffX = mTouchX - mLastTouchX;
-                float diffY = mTouchY - mLastTouchY;
-                mCenterY1 = mCenterY1 + diffY;
-                mCenterX1 = mCenterX1 + diffX;
-                
-                //store for next
-                mLastTouchX = mTouchX;
-                mLastTouchY = mTouchY;
-
-                
-            }else{
-//            	mPulseN = 0; //reset?
-//            	mPulseN = 0; //reset?
             }
             
         }
@@ -424,22 +549,39 @@ public class TargetLiveWallpaper extends WallpaperService {
 
         void drawTouchCycle(Canvas c) {
 
-            c.drawColor(0x0000ff00);
             int oldColor = mPaint.getColor();
-            int numberOfRings = 1;
-            int startRings = 24;
-            int widthOfRings = 12 + startRings;
-            for(int i = startRings; i < widthOfRings; i++)
+            c.drawColor(0x0000ff00);
+//            int numberOfRings = 1;
+            int startRings = 48;
+            int widthOfRings = 16;
+            int widthOfOutline = 1;
+            for(int i = startRings-widthOfOutline; i < startRings+widthOfRings+widthOfOutline; i++)
             {
 //                mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
 //                c.drawCircle(mLastTouchX, mLastTouchY, 8 + i, mPaint);
-            	float startAngle = 0.1f;
+
+            	float rotationSpeed = 0.1f;
             	float sweepAngle = 45.00f;
+            	if(i <= startRings || i >= startRings+widthOfRings)
+            	{//outline
+                    mPaint.setARGB(255, 255, 255, 255);
+//                	rotationSpeed = 0.05f;
+//                	sweepAngle = 45.00f+(2*widthOfOutline);
+            	}else
+            	{
+                    mPaint.setARGB(255, 0, 0, 255);
+//                    rotationSpeed = 0.1f;
+//                	sweepAngle = 45.00f;
+            	}
             	boolean useCenter = false;
-            	
-                c.drawArc(new RectF(mLastTouchX - i,mLastTouchY - i, mLastTouchX + i, mLastTouchY + i), startAngle*SystemClock.uptimeMillis()%360, sweepAngle, useCenter, mPaint);
-                c.drawArc(new RectF(mLastTouchX - i,mLastTouchY - i, mLastTouchX + i, mLastTouchY + i), (startAngle*SystemClock.uptimeMillis()+180)%360, sweepAngle*2, useCenter, mPaint);
-                c.drawArc(new RectF(mLastTouchX - (i+30),mLastTouchY - (i+30), mLastTouchX + (i+30), mLastTouchY + (i+30)), startAngle*SystemClock.uptimeMillis()%360, sweepAngle*4, useCenter, mPaint);
+                //inner.. counter
+                c.drawArc(new RectF(mLastTouchX - (i-30),mLastTouchY - (i-30), mLastTouchX + (i-30), mLastTouchY + (i-30)), 360-(rotationSpeed*SystemClock.uptimeMillis()*2%360), sweepAngle*4, useCenter, mPaint);
+            	//inner
+                c.drawArc(new RectF(mLastTouchX - i,mLastTouchY - i, mLastTouchX + i, mLastTouchY + i), rotationSpeed*SystemClock.uptimeMillis()%360, sweepAngle, useCenter, mPaint);
+                //mid
+                c.drawArc(new RectF(mLastTouchX - i,mLastTouchY - i, mLastTouchX + i, mLastTouchY + i), (rotationSpeed*SystemClock.uptimeMillis()+180)%360, sweepAngle*2, useCenter, mPaint);
+                //outer.. counter
+                c.drawArc(new RectF(mLastTouchX - (i+30),mLastTouchY - (i+30), mLastTouchX + (i+30), mLastTouchY + (i+30)), 360-(rotationSpeed*SystemClock.uptimeMillis()*2%360), sweepAngle*4, useCenter, mPaint);
             }
             mPaint.setColor(oldColor);
 //adding conditional to finish animation... YAY
