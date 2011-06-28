@@ -27,6 +27,12 @@
 
 package puzzleduck.targetLiveWallpaper;
 
+//import de.devmil.common.ui.color.ColorSelectorDialog;
+//import afzkl.development.mColorPicker.ColorPickerActivity;
+import de.devmil.common.ui.color.ColorSelectorDialog;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -34,9 +40,12 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.service.wallpaper.WallpaperService;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+import android.view.View;
 
 /*
  * This animated wallpaper draws a rotating wireframe shape. It is similar to
@@ -106,6 +115,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         
         private int mPulseN = 0;
 
+        private int mColorA = 0;
 
         private boolean leftOn = false;
         private boolean topOn = false;
@@ -140,8 +150,12 @@ public class TargetLiveWallpaper extends WallpaperService {
             onSharedPreferenceChanged(mPrefs, null);
         }
 
+        
+        
+        
+        
+        
         public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-
             String shape = prefs.getString("target_shape", "diamond");
             leftOn = prefs.getBoolean("target_left_on", false);
             topOn = prefs.getBoolean("target_top_on", false);
@@ -152,11 +166,28 @@ public class TargetLiveWallpaper extends WallpaperService {
             readModel(shape);
             
             
-            
-            
-            
-            
 
+//            
+//			int inColor = 0;
+////			ColorSelectorDialog dialog = new ColorSelectorDialog(getBaseContext(), listener, color);
+//
+//            
+////			getBaseContext(), new OnColorChangeListener() {
+////	            @Override
+////	            public void onClick(View v) {
+////	                // Check color
+////	            	mColorA = inColor;
+////	 
+////	            }
+////	        }, inColor
+//			ColorSelectorDialog dialog = new ColorSelectorDialog(this$0, null, inColor);
+
+            
+            
+            
+            
+//        	ColorSelectorDialog cd = new ColorSelectorDialog(null, null, 0);
+//        	cd.show();
 //			final ColorPickerDialog d = new ColorPickerDialog(this, prefs
 //					.getInt("dialog", 0xffffffff));
 //			d.setAlphaSliderVisible(true);
