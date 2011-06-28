@@ -25,16 +25,13 @@
 
 
 
-package com.example.puzzleduck.targetLiveWallpaper;
+package puzzleduck.targetLiveWallpaper;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.service.wallpaper.WallpaperService;
@@ -115,7 +112,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         private boolean quadOn = true;
         private boolean discOn = true;
         private boolean pulseOn = false;
-        private boolean conkeyOn = false;
+//        private boolean conkeyOn = false;
         
         
         
@@ -334,9 +331,9 @@ public class TargetLiveWallpaper extends WallpaperService {
                     // draw something
                     
                 	
-                	//TODO: add case for each component
                   updateTouchPoint(c);
-                  
+
+              	//add if for each component
                   
                 if(pulseOn)
                   {

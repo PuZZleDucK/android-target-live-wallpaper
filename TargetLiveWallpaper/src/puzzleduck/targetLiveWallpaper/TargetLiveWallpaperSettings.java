@@ -14,9 +14,7 @@
  * the License.
  */
 
-package com.example.puzzleduck.targetLiveWallpaper;
-
-import com.example.android.livecubes.R;
+package puzzleduck.targetLiveWallpaper;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
