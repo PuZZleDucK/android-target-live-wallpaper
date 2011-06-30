@@ -12,7 +12,7 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
--->
+--> 
 
 <PreferenceScreen android:key="cube2wallpaper_settings" android:title="@string/target_settings" xmlns:android="http://schemas.android.com/apk/res/android">
 
