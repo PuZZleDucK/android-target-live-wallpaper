@@ -126,7 +126,8 @@ public class TargetLiveWallpaper extends WallpaperService {
         private boolean pulseOn = false;
         private boolean mouseOn = true;
 //        private boolean conkeyOn = false;
-        
+
+        private Bitmap mCursorImage;
         
         
         private final Runnable mDrawCube = new Runnable() {
@@ -160,6 +161,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         
         public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
             String shape = prefs.getString("target_shape", "diamond");
+            String cursor = prefs.getString("cursor_type", "whiteglass");//cursor_typenames
             leftOn = prefs.getBoolean("target_left_on", false);
             topOn = prefs.getBoolean("target_top_on", false);
             discOn = prefs.getBoolean("target_disc_on", true);
@@ -170,76 +172,22 @@ public class TargetLiveWallpaper extends WallpaperService {
             readModel(shape);
             
             
+            
+            
+            
+            
+            
 
-//            
-//			int inColor = 0;
-////			ColorSelectorDialog dialog = new ColorSelectorDialog(getBaseContext(), listener, color);
-//
-//            
-////			getBaseContext(), new OnColorChangeListener() {
-////	            @Override
-////	            public void onClick(View v) {
-////	                // Check color
-////	            	mColorA = inColor;
-////	 
-////	            }
-////	        }, inColor
-//			ColorSelectorDialog dialog = new ColorSelectorDialog(this$0, null, inColor);
+            //from sdk... think i get it now
+            Resources myResources;
+            myResources = getBaseContext().getResources();
+//cursor_typeprefix
+//            mCursorImage = BitmapFactory.decodeResource(myResources, R.drawable.whiteglass);
+//            mCursorImage = BitmapFactory.decodeResource(myResources, getResources().getIdentifier(cursor + "cursor", "array", getPackageName()));
 
-            
-            
-            
-            
-//        	ColorSelectorDialog cd = new ColorSelectorDialog(null, null, 0);
-//        	cd.show();
-//			final ColorPickerDialog d = new ColorPickerDialog(this, prefs
-//					.getInt("dialog", 0xffffffff));
-//			d.setAlphaSliderVisible(true);
-//
-//			d.setButton("Ok", new DialogInterface.OnClickListener() {
-//
-//				@Override
-//				public void onClick(DialogInterface dialog, int which) {
-//
-//					SharedPreferences.Editor editor = prefs.edit();
-//					editor.putInt("dialog", d.getColor());
-//					editor.commit();
-//
-//				}
-//			});
-//
-//			d.setButton2("Cancel", new DialogInterface.OnClickListener() {
-//
-//				@Override
-//				public void onClick(DialogInterface dialog, int which) {
-//
-//				}
-//			});
-//
-//			d.show();
-//
-//			return true;
-//		} else if (key.equals("activity")) {
-//
-//			Intent i = new Intent(this, ColorPickerActivity.class);
-//			i.putExtra(ColorPickerActivity.INTENT_DATA_INITIAL_COLOR, prefs
-//					.getInt("activity", 0xff000000));
-//			startActivityForResult(i, ACTIVITY_COLOR_PICKER_REQUEST_CODE);
-//
-//			return true;
-//		}
-//		else if(key.equals("source_code")){
-//			Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://code.google.com/p/color-picker-view/"));
-//			startActivity(i);
-//		}
+            mCursorImage = BitmapFactory.decodeResource(myResources, getResources().getIdentifier( getPackageName() + ":drawable/"+cursor, null, null));
 
-//		return false;
-
-            
-            
-            
-            
-            
+//            int lid = getResources().getIdentifier(prefix + "lines", "array", getPackageName());
             
             
             
@@ -394,9 +342,7 @@ public class TargetLiveWallpaper extends WallpaperService {
                     {
                     	drawQuadTarget(c);	
                     }
-                    
-                    
-                    
+                   
 
                     if(mouseOn)
                     {
@@ -687,38 +633,8 @@ public class TargetLiveWallpaper extends WallpaperService {
         
         
         void drawMouseTarget(Canvas c) {
-//need to strip out touch detection... should not happen in draw.
-            
-//            int oldColor = mPaint.getColor();
-//            int numberOfRings = 16;
-//            for(int i = 0; i < numberOfRings; i++)
-//            {
-        	//pseudo code mind you...
-//                mPaint.setColor(white);
-//                //float startX, float startY, float stopX, float stopY, Paint paint
-//                c.drawLine(mLastTouchX, mLastTouchY, mLastTouchX-50, mLastTouchY, mPaint);
-//                c.drawLine(mLastTouchX, mLastTouchY, mLastTouchX, mLastTouchY-50, mPaint);
-//                
-//                c.drawLine(mLastTouchX-50, mLastTouchY, mLastTouchX-50, mLastTouchY, mPaint);
-//                c.drawLine(mLastTouchX, mLastTouchY-50, mLastTouchX, mLastTouchY-50, mPaint);
-//                
-//                c.drawLine(mLastTouchX, mLastTouchY, mLastTouchX, mLastTouchY,  mPaint);
-//                c.drawLine(mLastTouchX, mLastTouchY, mLastTouchX, mLastTouchY, mPaint);
-//                
-//                c.drawLine(mLastTouchX, mLastTouchY, mLastTouchX, mLastTouchY, mPaint);
-                
-                //what about icons???
-                //from sdk
-//                mBackgroundImageFar = BitmapFactory.decodeResource(res, R.drawable.background_a);
-                
-                
-
-                Resources mRes;
-                mRes = getBaseContext().getResources();
-                
-                Bitmap mBackgroundImageFar;
-                mBackgroundImageFar = BitmapFactory.decodeResource(mRes, R.drawable.whiteglass);
-                c.drawBitmap(mBackgroundImageFar, mLastTouchX, mLastTouchY, mPaint);
+                //what about icons??? duhh
+                c.drawBitmap(mCursorImage, mLastTouchX, mLastTouchY, mPaint);
                 
                 
                 

@@ -148,4 +148,12 @@
 
 
 </string-array>
+<string-array name="cursor_typenames">
+    <item>&quot;RedGlass&quot;</item>
+    <item>&quot;WhiteGlass&quot;</item>
+</string-array>
+<string-array name="cursor_typeprefix">
+    <item>&quot;redglass&quot;</item>
+    <item>&quot;whiteglass&quot;</item>
+</string-array>
 </resources>
