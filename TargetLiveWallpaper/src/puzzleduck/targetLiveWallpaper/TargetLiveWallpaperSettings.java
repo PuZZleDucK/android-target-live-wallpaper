@@ -16,10 +16,6 @@
 
 package puzzleduck.targetLiveWallpaper;
 
-//import de.devmil.common.ui.color.ColorSelectorDialog;
-//import afzkl.development.mColorPicker.ColorPickerActivity;
-import yuku.ambilwarna.AmbilWarnaDialog;
-import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -40,7 +36,7 @@ public class TargetLiveWallpaperSettings extends PreferenceActivity
     }
 
     @Override 
-    protected void onResume() {
+    protected void onResume() { 
         super.onResume();
     }
 
@@ -90,7 +86,7 @@ public class TargetLiveWallpaperSettings extends PreferenceActivity
 //		return null;
 //	}
 
-    
+     
 
     
 //

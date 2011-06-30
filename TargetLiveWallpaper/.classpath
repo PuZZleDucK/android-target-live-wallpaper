@@ -3,8 +3,5 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="src" path="/mColorPicker"/>
-	<classpathentry kind="src" path="/DevmilColor"/>
-	<classpathentry kind="src" path="/AmbilWarna"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

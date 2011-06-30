@@ -29,11 +29,13 @@ package puzzleduck.targetLiveWallpaper;
 
 //import de.devmil.common.ui.color.ColorSelectorDialog;
 //import afzkl.development.mColorPicker.ColorPickerActivity;
-import de.devmil.common.ui.color.ColorSelectorDialog;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -87,7 +89,7 @@ public class TargetLiveWallpaper extends WallpaperService {
 
     class TargetEngine extends Engine 
         implements SharedPreferences.OnSharedPreferenceChangeListener {
-
+ 
         private final Handler mHandler = new Handler();
 
         ThreeDPoint [] mOriginalPoints;
@@ -122,6 +124,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         private boolean quadOn = true;
         private boolean discOn = true;
         private boolean pulseOn = false;
+        private boolean mouseOn = true;
 //        private boolean conkeyOn = false;
         
         
@@ -162,6 +165,7 @@ public class TargetLiveWallpaper extends WallpaperService {
             discOn = prefs.getBoolean("target_disc_on", true);
             quadOn = prefs.getBoolean("target_quad_on", true);
             pulseOn = prefs.getBoolean("target_pulse_on", false);
+            mouseOn = prefs.getBoolean("target_mouse_on", false);
             // read the 3D model from the resource
             readModel(shape);
             
@@ -391,6 +395,14 @@ public class TargetLiveWallpaper extends WallpaperService {
                     	drawQuadTarget(c);	
                     }
                     
+                    
+                    
+
+                    if(mouseOn)
+                    {
+                    	drawMouseTarget(c);	
+                    }
+                	
                     
                 }
             } finally { 
@@ -673,6 +685,58 @@ public class TargetLiveWallpaper extends WallpaperService {
             
         }
         
+        
+        void drawMouseTarget(Canvas c) {
+//need to strip out touch detection... should not happen in draw.
+            
+//            int oldColor = mPaint.getColor();
+//            int numberOfRings = 16;
+//            for(int i = 0; i < numberOfRings; i++)
+//            {
+        	//pseudo code mind you...
+//                mPaint.setColor(white);
+//                //float startX, float startY, float stopX, float stopY, Paint paint
+//                c.drawLine(mLastTouchX, mLastTouchY, mLastTouchX-50, mLastTouchY, mPaint);
+//                c.drawLine(mLastTouchX, mLastTouchY, mLastTouchX, mLastTouchY-50, mPaint);
+//                
+//                c.drawLine(mLastTouchX-50, mLastTouchY, mLastTouchX-50, mLastTouchY, mPaint);
+//                c.drawLine(mLastTouchX, mLastTouchY-50, mLastTouchX, mLastTouchY-50, mPaint);
+//                
+//                c.drawLine(mLastTouchX, mLastTouchY, mLastTouchX, mLastTouchY,  mPaint);
+//                c.drawLine(mLastTouchX, mLastTouchY, mLastTouchX, mLastTouchY, mPaint);
+//                
+//                c.drawLine(mLastTouchX, mLastTouchY, mLastTouchX, mLastTouchY, mPaint);
+                
+                //what about icons???
+                //from sdk
+//                mBackgroundImageFar = BitmapFactory.decodeResource(res, R.drawable.background_a);
+                
+                
+
+                Resources mRes;
+                mRes = getBaseContext().getResources();
+                
+                Bitmap mBackgroundImageFar;
+                mBackgroundImageFar = BitmapFactory.decodeResource(mRes, R.drawable.whiteglass);
+                c.drawBitmap(mBackgroundImageFar, mLastTouchX, mLastTouchY, mPaint);
+                
+                
+                
+//            }
+//adding conditional to finish animation... YAY
+//            if (mPulseN > 0)
+//            {
+//            	--mPulseN;
+//            }
+//            
+//            if (mTouchX >=0 && mTouchY >= 0) {                
+//
+//            	if(mPulseN <= 0)
+//            		mPulseN = numberOfRings;
+//                    
+//            }
+            
+        }
 
 
         void drawTouchDisc(Canvas c) {
