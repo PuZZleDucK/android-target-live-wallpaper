@@ -207,14 +207,4 @@
     <item>&quot;22&quot;</item>
     <item>&quot;32&quot;</item>
 </string-array>
-<string-array name="pulse_colorlabels">
-    <item>&quot;Red&quot;</item>
-    <item>&quot;Green&quot;</item>
-    <item>&quot;Blue&quot;</item>
-</string-array>
-<string-array name="pulse_colorvalues">
-    <item>&quot;4294901760&quot;</item>
-    <item>&quot;4278255360&quot;</item>
-    <item>&quot;4278190335&quot;</item>
-</string-array>
 </resources>
