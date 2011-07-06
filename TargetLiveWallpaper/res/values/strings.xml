@@ -15,7 +15,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
--->
+--> 
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- General -->
@@ -38,4 +38,10 @@
     <string name="target_settings_mouse_summary">Select whether to display \'mouse cursor\'</string>
     <string name="cursor_settings_title">Select cursor:</string>
     <string name="cursor_settings_summary">Select from various open source cursors</string>
+    <string name="target_settings_pulse_category_title">Pulsing target settings</string>
+    <string name="target_settings_pulse_category_summary">Pulse config, number, width, etc</string>
+    <string name="target_settings_pulse_number_title">Number of rings to display</string>
+    <string name="target_settings_pulse_number_summary">Number of rings to display</string>
+    <string name="target_settings_pulse_width_title">Width of pulse rings</string>
+    <string name="target_settings_pulse_width_summary">How wide?</string>
 </resources>

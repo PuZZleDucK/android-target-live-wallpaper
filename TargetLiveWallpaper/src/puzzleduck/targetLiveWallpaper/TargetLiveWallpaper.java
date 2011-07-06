@@ -22,16 +22,8 @@
 // might try to change models now...
 //
 
-
-
-
 package puzzleduck.targetLiveWallpaper;
 
-//import de.devmil.common.ui.color.ColorSelectorDialog;
-//import afzkl.development.mColorPicker.ColorPickerActivity;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -42,24 +34,18 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.service.wallpaper.WallpaperService;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import android.view.View;
-
-/*
- * This animated wallpaper draws a rotating wireframe shape. It is similar to
- * example #1, but has a choice of 2 shapes, which are user selectable and
- * defined in resources instead of in code.
- */
 
 
+//This animated wallpaper draws many user selectable items... target, trackers, cursor, etc
 public class TargetLiveWallpaper extends WallpaperService {
-
     public static final String SHARED_PREFS_NAME="target_lwp_settings";
 
+
+    private int numberOfRings = 8;
+    private int spacingOfRings = 15;
     
     static class ThreeDPoint {
         float x;
@@ -96,13 +82,10 @@ public class TargetLiveWallpaper extends WallpaperService {
         ThreeDPoint [] mRotatedPoints;
         ThreeDLine [] mLines;
 
-//        ThreeDLine [] mTargetLines;
-        
         private final Paint mPaint = new Paint();
-//        private float mOffset;
         private float mTouchX = -1;
         private float mTouchY = -1;
-//        private long mStartTime;
+
         private float mCenterX1;
         private float mCenterY1;
 
@@ -112,12 +95,11 @@ public class TargetLiveWallpaper extends WallpaperService {
         private float mTopTargetX;
         private float mTopTargetY;
         
-        private float mLastTouchX = 0;
-        private float mLastTouchY = 0;
+        private float mLastTouchX = 150;//indent initial display
+        private float mLastTouchY = 250;
         
         private int mPulseN = 0;
-
-        private int mColorA = 0;
+//        private int mColorA = 0;
 
         private boolean leftOn = false;
         private boolean topOn = false;
@@ -126,9 +108,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         private boolean pulseOn = false;
         private boolean mouseOn = true;
 //        private boolean conkeyOn = false;
-
         private Bitmap mCursorImage;
-        
         
         private final Runnable mDrawCube = new Runnable() {
             public void run() {
@@ -139,26 +119,20 @@ public class TargetLiveWallpaper extends WallpaperService {
         private SharedPreferences mPrefs;
 
         TargetEngine() {
-            // Create a Paint to draw the lines for our cube
+            // Create a Paint to draw the lines for our 3D shape
             final Paint paint = mPaint;
             paint.setColor(0xffffffff);
             paint.setAntiAlias(true);
-            paint.setStrokeWidth(4);//increased stroke
+            paint.setStrokeWidth(2);//increased stroke... better thin
             paint.setStrokeCap(Paint.Cap.ROUND);
             paint.setStyle(Paint.Style.STROKE); 
-
-//            mStartTime = SystemClock.elapsedRealtime();
-
+            
             mPrefs = TargetLiveWallpaper.this.getSharedPreferences(SHARED_PREFS_NAME, 0);
             mPrefs.registerOnSharedPreferenceChangeListener(this);
             onSharedPreferenceChanged(mPrefs, null);
         }
 
-        
-        
-        
-        
-        
+       
         public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
             String shape = prefs.getString("target_shape", "diamond");
             String cursor = prefs.getString("cursor_type", "whiteglass");//cursor_typenames
@@ -166,34 +140,24 @@ public class TargetLiveWallpaper extends WallpaperService {
             topOn = prefs.getBoolean("target_top_on", false);
             discOn = prefs.getBoolean("target_disc_on", true);
             quadOn = prefs.getBoolean("target_quad_on", true);
-            pulseOn = prefs.getBoolean("target_pulse_on", false);
             mouseOn = prefs.getBoolean("target_mouse_on", false);
+            
+            //pulse settings:
+            pulseOn = prefs.getBoolean("target_pulse_on", false);
+//            spacingOfRings = prefs.getInt("target_pulse_width", 15);
+//            numberOfRings = prefs.getInt("target_pulse_number", 8);
+            spacingOfRings = Integer.valueOf(prefs.getString("target_pulse_width", "15"));
+            numberOfRings = Integer.valueOf(prefs.getString("target_pulse_number", "8"));
+            
+            
             // read the 3D model from the resource
             readModel(shape);
             
-            
-            
-            
-            
-            
-            
-
             //from sdk... think i get it now
             Resources myResources;
             myResources = getBaseContext().getResources();
-//cursor_typeprefix
-//            mCursorImage = BitmapFactory.decodeResource(myResources, R.drawable.whiteglass);
-//            mCursorImage = BitmapFactory.decodeResource(myResources, getResources().getIdentifier(cursor + "cursor", "array", getPackageName()));
-
             mCursorImage = BitmapFactory.decodeResource(myResources, getResources().getIdentifier( getPackageName() + ":drawable/"+cursor, null, null));
 
-//            int lid = getResources().getIdentifier(prefix + "lines", "array", getPackageName());
-            
-            
-            
-            
-            
-            
         }
 
         private void readModel(String prefix) {
@@ -256,7 +220,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         @Override
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
-            mCenterX1 = 0;//width/2; 
+            mCenterX1 = width/2; 
             mCenterY1 = height/2;
             mLeftTargetX = width/2;
             mLeftTargetY = height/2;
@@ -311,13 +275,7 @@ public class TargetLiveWallpaper extends WallpaperService {
             try {
                 c = holder.lockCanvas();
                 if (c != null) {
-                    // draw something
-                    
-                	
-                  updateTouchPoint(c);
-
-              	//add if for each component
-                  
+                updateTouchPoint(c);
                 if(pulseOn)
                   {
                         drawTouchPointPulse(c);
@@ -325,7 +283,6 @@ public class TargetLiveWallpaper extends WallpaperService {
                   if(discOn)
                   {
                       drawTouchDisc(c);
-//                      
                   }   
                   
 //                  drawConkey(c);
@@ -587,10 +544,8 @@ public class TargetLiveWallpaper extends WallpaperService {
         
         
         void updateTouchPoint(Canvas c) {
-//need to strip out touch detection... should not happen in draw.
         	   if (mTouchX >=0 && mTouchY >= 0) {                
 
-        	
 	        	// get relative dirs
 	                float diffX = mTouchX - mLastTouchX;
 	                float diffY = mTouchY - mLastTouchY;
@@ -601,22 +556,18 @@ public class TargetLiveWallpaper extends WallpaperService {
 	                mLastTouchX = mTouchX;
 	                mLastTouchY = mTouchY;            
         	   }
-//               mPaint.setColor(0);//clear frame
+        	   //pre draw canvas clearing.... do not remove (again).
         	   c.drawColor(0xff000000);   
         }
         
         
         void drawTouchPointPulse(Canvas c) {
-//need to strip out touch detection... should not happen in draw.
-            
-//            int oldColor = mPaint.getColor();
-            int numberOfRings = 16;
             for(int i = 0; i < numberOfRings; i++)
             {
                 mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
-                c.drawCircle(mLastTouchX, mLastTouchY, 8 * i, mPaint);
+                c.drawCircle(mLastTouchX, mLastTouchY, spacingOfRings * i, mPaint);
             }
-//adding conditional to finish animation... YAY
+// conditional to finish animation.
             if (mPulseN > 0)
             {
             	--mPulseN;

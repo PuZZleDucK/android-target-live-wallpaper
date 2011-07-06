@@ -21,7 +21,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:versionCode="1" android:versionName="1" package="puzzleduck.targetLiveWallpaper">
 
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="9"/>
+    <uses-sdk android:targetSdkVersion="9" android:minSdkVersion="7"/>
     <uses-feature android:name="android.software.live_wallpaper" />
 
     <uses-feature android:name="android.software.live_wallpaper" />

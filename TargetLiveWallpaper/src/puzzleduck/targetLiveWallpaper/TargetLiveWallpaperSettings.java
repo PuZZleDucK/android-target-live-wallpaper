@@ -16,13 +16,9 @@
 
 package puzzleduck.targetLiveWallpaper;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 
 public class TargetLiveWallpaperSettings extends PreferenceActivity
     implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -48,71 +44,12 @@ public class TargetLiveWallpaperSettings extends PreferenceActivity
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
-    	
-//Action: 
-//    	org.openintents.action.PICK_COLOR 
-//      startActivityForResult() to launch this color picker with a default color specified in the integer 
-//      Intent extra "org.openintents.extra.COLOR". The chosen color will be returned in an Intent the 
-//      same way
-//    	int x = 0;
-//    	Intent i = new Intent("org.openintents.action.PICK_COLOR");
-//    	i.putExtra("org.openintents.extra.COLOR", x);
-//      startActivityForResult(i, x);
-    	
-    	
-//    	Object initialColor = 0;
-//		AmbilWarnaDialog dialog = AmbilWarnaDialog(this, initialColor, new OnAmbilWarnaListener() {
-////            @Override
-//            public void onOk(AmbilWarnaDialog dialog, int color) {
-//                    // color is the color selected by the user.
-//            }
-//                    
-////            @Override
-//            public void onCancel(AmbilWarnaDialog dialog) {
-//                    // cancel was selected by the user
-//            }
-//    });
-//
-//    dialog.show();
-    	
-    	
+//    	if(key.equals("target_pulse_number"))
+//    	{
+//    		
+//    	}
     	
     }
-
-//	private AmbilWarnaDialog AmbilWarnaDialog(
-//			TargetLiveWallpaperSettings targetLiveWallpaperSettings,
-//			Object initialColor, OnAmbilWarnaListener onAmbilWarnaListener) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
-     
-
-    
-//
-//	private final static int ACTIVITY_COLOR_PICKER_REQUEST_CODE = 1000;
-////	@Override
-//	public boolean onPreferenceClick(Preference preference) throws NameNotFoundException {
-//
-//		final SharedPreferences prefs = PreferenceManager
-//				.getDefaultSharedPreferences(TargetLiveWallpaperSettings.this);
-//		String key = preference.getKey();
-//		
-//		//in ADB i get nothing
-//		//should get:
-//		//I/ActivityManager(  582): Starting: Intent { cmp=afzkl.development.mColorPicker/.ColorPickerActivity (has extras) } from pid 3553
-//		// trying another approach
-//		if (key.equals("activity")) {
-//			Intent i = new Intent(this, ColorPickerActivity.class);
-//			i.putExtra(ColorPickerActivity.INTENT_DATA_INITIAL_COLOR, prefs
-//					.getInt("activity", 0xff000000));
-//			startActivityForResult(i, ACTIVITY_COLOR_PICKER_REQUEST_CODE);
-//			return true;
-//		}
-//		
-//		return false;
-//	}
-
     
     
 }
