@@ -44,10 +44,6 @@ public class TargetLiveWallpaperSettings extends PreferenceActivity
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
-//    	if(key.equals("target_pulse_number"))
-//    	{
-//    		
-//    	}
     	
     }
     

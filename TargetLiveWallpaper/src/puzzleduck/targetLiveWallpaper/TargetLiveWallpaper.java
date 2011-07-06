@@ -100,6 +100,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         
         private int mPulseN = 0;
 //        private int mColorA = 0;
+    	private int pulseColor = 0xffff0000; //default red
 
         private boolean leftOn = false;
         private boolean topOn = false;
@@ -144,10 +145,12 @@ public class TargetLiveWallpaper extends WallpaperService {
             
             //pulse settings:
             pulseOn = prefs.getBoolean("target_pulse_on", false);
-//            spacingOfRings = prefs.getInt("target_pulse_width", 15);
-//            numberOfRings = prefs.getInt("target_pulse_number", 8);
             spacingOfRings = Integer.valueOf(prefs.getString("target_pulse_width", "15"));
             numberOfRings = Integer.valueOf(prefs.getString("target_pulse_number", "8"));
+//            pulseColor =  Integer.valueOf(prefs.getString("target_pulse_color", "4294901760"));
+            
+            
+            
             
             
             // read the 3D model from the resource
@@ -564,7 +567,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         void drawTouchPointPulse(Canvas c) {
             for(int i = 0; i < numberOfRings; i++)
             {
-                mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
+                mPaint.setColor(pulseColor-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
                 c.drawCircle(mLastTouchX, mLastTouchY, spacingOfRings * i, mPaint);
             }
 // conditional to finish animation.

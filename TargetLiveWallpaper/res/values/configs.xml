@@ -177,13 +177,6 @@
     <item>&quot;ubuntulogo&quot;</item>
     <item>&quot;vbox&quot;</item>
 </string-array>
-<integer-array name="pulse_numbervalues1">
-    <item>2</item>
-    <item>4</item>
-    <item>8</item>
-    <item>16</item>
-    <item>32</item>
-</integer-array>
 <string-array name="pulse_numberlabels">
     <item>&quot;two&quot;</item>
     <item>&quot;four&quot;</item>
@@ -199,14 +192,6 @@
     <item>&quot;twenty two&quot;</item>
     <item>&quot;thirty two&quot;</item>
 </string-array>
-<integer-array name="pulse_widthvalues1">
-    <item>3</item>
-    <item>5</item>
-    <item>9</item>
-    <item>15</item>
-    <item>22</item>
-    <item>32</item>
-</integer-array>
 <string-array name="pulse_numbervalues">
     <item>&quot;2&quot;</item>
     <item>&quot;4&quot;</item>
@@ -221,5 +206,15 @@
     <item>&quot;15&quot;</item>
     <item>&quot;22&quot;</item>
     <item>&quot;32&quot;</item>
+</string-array>
+<string-array name="pulse_colorlabels">
+    <item>&quot;Red&quot;</item>
+    <item>&quot;Green&quot;</item>
+    <item>&quot;Blue&quot;</item>
+</string-array>
+<string-array name="pulse_colorvalues">
+    <item>&quot;4294901760&quot;</item>
+    <item>&quot;4278255360&quot;</item>
+    <item>&quot;4278190335&quot;</item>
 </string-array>
 </resources>

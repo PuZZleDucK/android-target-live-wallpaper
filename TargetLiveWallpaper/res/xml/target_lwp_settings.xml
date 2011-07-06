@@ -23,10 +23,9 @@
     <ListPreference android:key="cursor_type" android:entries="@array/cursor_typenames" android:entryValues="@array/cursor_typeprefix" android:title="@string/cursor_settings_title" android:summary="@string/cursor_settings_summary"></ListPreference>
     <PreferenceCategory android:key="cursor_pulse_category" android:title="@string/target_settings_pulse_category_title" android:summary="@string/target_settings_pulse_category_summary">
     <CheckBoxPreference android:summaryOn="@string/target_settings_pulse_on_summary" android:summaryOff="@string/target_settings_pulse_off_summary" android:key="target_pulse_on" android:title="@string/target_settings_pulse_title" android:summary="@string/target_settings_pulse_title" android:defaultValue="false"></CheckBoxPreference>
-    <Preference android:defaultValue="8" android:key="target_pulse_number1"></Preference>
-    <Preference android:key="target_settings_pulse_width" android:summary="@string/target_settings_pulse_width_summary" android:title="@string/target_settings_pulse_width_title" android:defaultValue="15"></Preference>
-    <ListPreference android:key="target_pulse_number" android:title="@string/target_settings_pulse_number_title" android:defaultValue="8" android:summary="@string/target_settings_pulse_number_summary" android:entries="@array/pulse_numberlabels" android:entryValues="@array/pulse_numbervalues"></ListPreference>
-    <ListPreference android:key="target_pulse_width" android:summary="@string/target_settings_pulse_width_summary" android:title="@string/target_settings_pulse_width_title" android:entryValues="@array/pulse_widthvalues" android:entries="@array/pulse_widthlabels"></ListPreference>
+    <ListPreference android:key="target_pulse_number" android:title="@string/target_settings_pulse_number_title" android:summary="@string/target_settings_pulse_number_summary" android:entries="@array/pulse_numberlabels" android:entryValues="@array/pulse_numbervalues" android:defaultValue='"8"'></ListPreference>
+    <ListPreference android:key="target_pulse_width" android:summary="@string/target_settings_pulse_width_summary" android:title="@string/target_settings_pulse_width_title" android:entryValues="@array/pulse_widthvalues" android:entries="@array/pulse_widthlabels" android:defaultValue='"15"'></ListPreference>
+    <ListPreference android:entries="@array/pulse_colorlabels" android:entryValues="@array/pulse_colorvalues" android:key="target_pulse_color" android:title="@string/target_settings_pulse_color_title" android:summary="@string/target_settings_pulse_color_summary" android:defaultValue='"4294901760"'></ListPreference>
 </PreferenceCategory>
     
     

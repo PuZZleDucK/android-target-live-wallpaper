@@ -44,4 +44,6 @@
     <string name="target_settings_pulse_number_summary">Number of rings to display</string>
     <string name="target_settings_pulse_width_title">Width of pulse rings</string>
     <string name="target_settings_pulse_width_summary">How wide?</string>
+    <string name="target_settings_pulse_color_title">Pulse color</string>
+    <string name="target_settings_pulse_color_summary">Which color for pulse</string>
 </resources>
