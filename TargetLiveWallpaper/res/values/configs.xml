@@ -20,7 +20,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string-array name="target_shapenames">
-        <item>"Cube"</item>
+        <item>&quot;Cube&quot;</item>
         <item>"Dodecahedron"</item>
     <item>&quot;Diamond&quot;</item>
 </string-array>

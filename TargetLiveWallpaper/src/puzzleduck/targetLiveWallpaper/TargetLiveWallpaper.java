@@ -44,8 +44,6 @@ public class TargetLiveWallpaper extends WallpaperService {
     public static final String SHARED_PREFS_NAME="target_lwp_settings";
 
 
-    private int numberOfRings = 8;
-    private int spacingOfRings = 15;
     
     static class ThreeDPoint {
         float x;
@@ -98,16 +96,23 @@ public class TargetLiveWallpaper extends WallpaperService {
         private float mLastTouchX = 150;//indent initial display
         private float mLastTouchY = 250;
         
-        private int mPulseN = 0;
 
         private boolean leftOn = false;
         private boolean topOn = false;
         private boolean quadOn = true;
         private boolean discOn = true;
+        
         private boolean pulseOn = false;
+        private int numberOfRings = 8;
+        private int spacingOfRings = 15;
+        private int mPulseN = 0;
+        
+        
         private boolean mouseOn = true;
-//        private boolean conkeyOn = false;
         private Bitmap mCursorImage;
+        private int cursorXOffset = 0;
+        private int cursorYOffset = 0;
+//        private boolean conkeyOn = false;
         
         private final Runnable mDrawCube = new Runnable() {
             public void run() {
@@ -561,7 +566,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         
         void drawTouchPointPulse(Canvas c) {
             for(int i = 0; i < numberOfRings; i++)
-            {
+            {// want to do configurable color one day...
                 mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
                 c.drawCircle(mLastTouchX, mLastTouchY, spacingOfRings * i, mPaint);
             }
@@ -571,11 +576,9 @@ public class TargetLiveWallpaper extends WallpaperService {
             	--mPulseN;
             }
             
-            if (mTouchX >=0 && mTouchY >= 0) {                
-
+            if (mTouchX >=0 && mTouchY >= 0) {         
             	if(mPulseN <= 0)
             		mPulseN = numberOfRings;
-                    
             }
             
         }
@@ -585,22 +588,6 @@ public class TargetLiveWallpaper extends WallpaperService {
                 //what about icons??? duhh
                 c.drawBitmap(mCursorImage, mLastTouchX, mLastTouchY, mPaint);
                 
-                
-                
-//            }
-//adding conditional to finish animation... YAY
-//            if (mPulseN > 0)
-//            {
-//            	--mPulseN;
-//            }
-//            
-//            if (mTouchX >=0 && mTouchY >= 0) {                
-//
-//            	if(mPulseN <= 0)
-//            		mPulseN = numberOfRings;
-//                    
-//            }
-            
         }
 
 
