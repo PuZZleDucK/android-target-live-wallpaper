@@ -148,7 +148,7 @@
 
 
 </string-array>
-<string-array name="cursor_typenames"><item>&quot;debianswirl&quot;</item><item>&quot;eclipseicon&quot;</item><item>&quot;gimpball&quot;</item><item>&quot;gimpcolorcircle&quot;</item><item>&quot;gimpcolorsub&quot;</item><item>&quot;gimpheart&quot;</item><item>&quot;gnomefoot&quot;</item><item>&quot;gnomesupport&quot;</item><item>&quot;mozicon&quot;</item><item>&quot;robot&quot;</item><item>&quot;ubuntulogo&quot;</item>
+<string-array name="cursor_typenames"><item>&quot;debianswirl&quot;</item><item>&quot;eclipseicon&quot;</item><item>&quot;gimpball&quot;</item><item>&quot;gimpcolorcircle&quot;</item><item>&quot;gimpheart&quot;</item><item>&quot;gnomefoot&quot;</item><item>&quot;gnomesupport&quot;</item><item>&quot;mozicon&quot;</item><item>&quot;robot&quot;</item><item>&quot;ubuntulogo&quot;</item>
     
     
 </string-array>
@@ -157,7 +157,6 @@
     <item>&quot;eclipseicon&quot;</item>
     <item>&quot;gimpball&quot;</item>
     <item>&quot;gimpcolorcircle&quot;</item>
-    <item>&quot;gimpcolorsub&quot;</item>
     <item>&quot;gimpheart&quot;</item>
     <item>&quot;gnomefoot&quot;</item>
     <item>&quot;gnomesupport&quot;</item>
