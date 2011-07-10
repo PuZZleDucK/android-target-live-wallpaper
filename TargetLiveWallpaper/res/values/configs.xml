@@ -148,34 +148,22 @@
 
 
 </string-array>
-<string-array name="cursor_typenames">
-    <item>&quot;RedGlass Cursor&quot;</item><item>&quot;WhiteGlass Cursor&quot;</item><item>&quot;androidicon&quot;</item><item>&quot;controls&quot;</item><item>&quot;debianswirl&quot;</item><item>&quot;dmz&quot;</item><item>&quot;eclipseicon&quot;</item><item>&quot;galaxyhome&quot;</item><item>&quot;gimpball&quot;</item><item>&quot;gimpcolorcircle&quot;</item><item>&quot;gimpcolorsub&quot;</item><item>&quot;gimpheart&quot;</item><item>&quot;gimpwilber&quot;</item><item>&quot;gnomefoot&quot;</item><item>&quot;gnomesupport&quot;</item><item>&quot;handhelds&quot;</item><item>&quot;librelogo&quot;</item><item>&quot;lunarlander&quot;</item><item>&quot;mozicon&quot;</item><item>&quot;robot&quot;</item><item>&quot;ubuntulogo&quot;</item><item>&quot;vbox&quot;</item>
+<string-array name="cursor_typenames"><item>&quot;debianswirl&quot;</item><item>&quot;eclipseicon&quot;</item><item>&quot;gimpball&quot;</item><item>&quot;gimpcolorcircle&quot;</item><item>&quot;gimpcolorsub&quot;</item><item>&quot;gimpheart&quot;</item><item>&quot;gnomefoot&quot;</item><item>&quot;gnomesupport&quot;</item><item>&quot;mozicon&quot;</item><item>&quot;robot&quot;</item><item>&quot;ubuntulogo&quot;</item>
     
     
 </string-array>
 <string-array name="cursor_typeprefix">
-    <item>&quot;redglass&quot;</item>
-    <item>&quot;whiteglass&quot;</item>
-    <item>&quot;androidicon&quot;</item>
-    <item>&quot;controls&quot;</item>
     <item>&quot;debianswirl&quot;</item>
-    <item>&quot;dmz&quot;</item>
     <item>&quot;eclipseicon&quot;</item>
-    <item>&quot;galaxyhome&quot;</item>
     <item>&quot;gimpball&quot;</item>
     <item>&quot;gimpcolorcircle&quot;</item>
     <item>&quot;gimpcolorsub&quot;</item>
     <item>&quot;gimpheart&quot;</item>
-    <item>&quot;gimpwilber&quot;</item>
     <item>&quot;gnomefoot&quot;</item>
     <item>&quot;gnomesupport&quot;</item>
-    <item>&quot;handhelds&quot;</item>
-    <item>&quot;librelogo&quot;</item>
-    <item>&quot;lunarlander&quot;</item>
     <item>&quot;mozicon&quot;</item>
     <item>&quot;robot&quot;</item>
     <item>&quot;ubuntulogo&quot;</item>
-    <item>&quot;vbox&quot;</item>
 </string-array>
 <string-array name="pulse_numberlabels">
     <item>&quot;two&quot;</item>
