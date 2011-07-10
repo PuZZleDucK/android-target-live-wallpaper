@@ -139,7 +139,7 @@ public class TargetLiveWallpaper extends WallpaperService {
        
         public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
             String shape = prefs.getString("target_shape", "diamond");
-            String cursor = prefs.getString("cursor_type", "whiteglass");//cursor_typenames
+            String cursor = prefs.getString("cursor_type", "debianswirl");//cursor_typenames
             leftOn = prefs.getBoolean("target_left_on", false);
             topOn = prefs.getBoolean("target_top_on", false);
             discOn = prefs.getBoolean("target_disc_on", true);
@@ -202,6 +202,27 @@ public class TargetLiveWallpaper extends WallpaperService {
         public void onCreate(SurfaceHolder surfaceHolder) {
             super.onCreate(surfaceHolder);
             setTouchEventsEnabled(true);
+            
+
+            //maybe just if null???
+            SharedPreferences prefs;
+            String shape = "diamond";
+            String cursor = "debianswirl";//cursor_typenames
+            leftOn = false;
+            topOn = false;
+            discOn = true;
+            quadOn = true;
+            mouseOn = false;
+            
+            //pulse settings:
+            pulseOn = false;
+            spacingOfRings = 15;
+            numberOfRings = 8;
+
+            
+            
+            
+            
         }
 
         @Override
@@ -586,7 +607,9 @@ public class TargetLiveWallpaper extends WallpaperService {
         
         void drawMouseTarget(Canvas c) {
                 //what about icons??? duhh
-                c.drawBitmap(mCursorImage, mLastTouchX, mLastTouchY, mPaint);
+//            c.drawBitmap(mCursorImage, mLastTouchX, mLastTouchY, mPaint);
+        	
+            c.drawBitmap(mCursorImage, mLastTouchX - (mCursorImage.getHeight()/2), mLastTouchY - (mCursorImage.getWidth()/2), mPaint);
                 
         }
 
@@ -612,8 +635,8 @@ public class TargetLiveWallpaper extends WallpaperService {
 //                	rotationSpeed = 0.05f;
 //                	sweepAngle = 45.00f+(2*widthOfOutline);
             	}else
-            	{
-                    mPaint.setARGB(255, 0, 0, 255);
+            	{//red
+                    mPaint.setARGB(255, 255, 0, 0);
 //                    rotationSpeed = 0.1f;
 //                	sweepAngle = 45.00f;
             	}
