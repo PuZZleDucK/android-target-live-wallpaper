@@ -44,4 +44,12 @@
     <string name="target_settings_pulse_number_summary">Number of rings to display</string>
     <string name="target_settings_pulse_width_title">Width of pulse rings</string>
     <string name="target_settings_pulse_width_summary">How wide</string>
+    <string name="target_settings_static_category_title">Static Image LWP</string>
+    <string name="target_settings_static_category_summary">Settings for static target display</string>
+    <string name="target_settings_3d_title">Settings for 3D trackers</string>
+    <string name="target_settings_3d_summary">Display settings for 3D objects</string>
+    <string name="target_settings_animated_title">Animated Target settings</string>
+    <string name="target_settings_animated_summary">Settings for animated targets</string>
+    <string name="target_settings_disctype_title">Color or style of animated discs</string>
+    <string name="target_settings_disctype_summary">Color for animated targets</string>
 </resources>

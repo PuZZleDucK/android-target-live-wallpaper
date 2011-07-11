@@ -100,19 +100,20 @@ public class TargetLiveWallpaper extends WallpaperService {
         private boolean leftOn = false;
         private boolean topOn = false;
         private boolean quadOn = true;
-        private boolean discOn = true;
+    	private String shape = "diamond";
         
+        private boolean discOn = true;
+        private int discStyle = 1;
         private boolean pulseOn = false;
         private int numberOfRings = 8;
         private int spacingOfRings = 15;
         private int mPulseN = 0;
         
-        
         private boolean mouseOn = true;
+        String cursor = "debianswirl";//cursor_typenames
         private Bitmap mCursorImage;
-        private int cursorXOffset = 0;
-        private int cursorYOffset = 0;
-//        private boolean conkeyOn = false;
+
+        //        private boolean conkeyOn = false;
         
         private final Runnable mDrawCube = new Runnable() {
             public void run() {
@@ -138,22 +139,26 @@ public class TargetLiveWallpaper extends WallpaperService {
 
        
         public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-            String shape = prefs.getString("target_shape", "diamond");
-            String cursor = prefs.getString("cursor_type", "debianswirl");//cursor_typenames
+        	//3d targets
+        	shape = prefs.getString("target_shape", "diamond");
+            quadOn = prefs.getBoolean("target_quad_on", true);
             leftOn = prefs.getBoolean("target_left_on", false);
             topOn = prefs.getBoolean("target_top_on", false);
+            
+            //rotating targets
             discOn = prefs.getBoolean("target_disc_on", true);
-            quadOn = prefs.getBoolean("target_quad_on", true);
+            discStyle = Integer.valueOf(prefs.getString("target_disc_type", "1"));
+            
+            //static targets
             mouseOn = prefs.getBoolean("target_mouse_on", false);
+            cursor = prefs.getString("cursor_type", "debianswirl");//cursor_typenames
             
             //pulse settings:
             pulseOn = prefs.getBoolean("target_pulse_on", false);
             spacingOfRings = Integer.valueOf(prefs.getString("target_pulse_width", "15"));
             numberOfRings = Integer.valueOf(prefs.getString("target_pulse_number", "8"));
 
-            
-            
-            // read the 3D model from the resource
+           // read the 3D model from the resource
             readModel(shape);
             
             //from sdk... think i get it now
@@ -202,27 +207,28 @@ public class TargetLiveWallpaper extends WallpaperService {
         public void onCreate(SurfaceHolder surfaceHolder) {
             super.onCreate(surfaceHolder);
             setTouchEventsEnabled(true);
+           
+            //maybe just if null??? .. using mPrefs now... hopefully this will be resolved now
+            SharedPreferences prefs = mPrefs;            
+        	//3d targets
+        	shape = prefs.getString("target_shape", "diamond");
+            quadOn = prefs.getBoolean("target_quad_on", true);
+            leftOn = prefs.getBoolean("target_left_on", false);
+            topOn = prefs.getBoolean("target_top_on", false);
             
-
-            //maybe just if null???
-            SharedPreferences prefs;
-            String shape = "diamond";
-            String cursor = "debianswirl";//cursor_typenames
-            leftOn = false;
-            topOn = false;
-            discOn = true;
-            quadOn = true;
-            mouseOn = false;
+            //rotating targets
+            discOn = prefs.getBoolean("target_disc_on", true);
+            discStyle = Integer.valueOf(prefs.getString("target_disc_type", "1"));
+            
+            //static targets
+            mouseOn = prefs.getBoolean("target_mouse_on", false);
+            cursor = prefs.getString("cursor_type", "debianswirl");//cursor_typenames
             
             //pulse settings:
-            pulseOn = false;
-            spacingOfRings = 15;
-            numberOfRings = 8;
-
-            
-            
-            
-            
+            pulseOn = prefs.getBoolean("target_pulse_on", false);
+            spacingOfRings = Integer.valueOf(prefs.getString("target_pulse_width", "15"));
+            numberOfRings = Integer.valueOf(prefs.getString("target_pulse_number", "8"));
+ 
         }
 
         @Override
@@ -586,7 +592,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         
         
         void drawTouchPointPulse(Canvas c) {
-            for(int i = 0; i < numberOfRings; i++)
+            for(int i = 0; i <= numberOfRings; i++)
             {// want to do configurable color one day...
                 mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
                 c.drawCircle(mLastTouchX, mLastTouchY, spacingOfRings * i, mPaint);
@@ -606,19 +612,17 @@ public class TargetLiveWallpaper extends WallpaperService {
         
         
         void drawMouseTarget(Canvas c) {
-                //what about icons??? duhh
-//            c.drawBitmap(mCursorImage, mLastTouchX, mLastTouchY, mPaint);
-        	
+                //what about icons??? duhh... removing cursors and centering target
             c.drawBitmap(mCursorImage, mLastTouchX - (mCursorImage.getHeight()/2), mLastTouchY - (mCursorImage.getWidth()/2), mPaint);
-                
         }
 
-
         void drawTouchDisc(Canvas c) {
-
+        	//case: discStyle.... rgb the hard way
             int oldColor = mPaint.getColor();
-            c.drawColor(0x0000ff00);
-//            int numberOfRings = 1;
+
+            
+
+            
             int startRings = 48;
             int widthOfRings = 16;
             int widthOfOutline = 1;
@@ -639,6 +643,25 @@ public class TargetLiveWallpaper extends WallpaperService {
                     mPaint.setARGB(255, 255, 0, 0);
 //                    rotationSpeed = 0.1f;
 //                	sweepAngle = 45.00f;
+                    switch(discStyle)
+                    {
+                    case 1:
+                    	mPaint.setARGB(255, 255, 0, 0);
+                    	break;
+                    case 2:
+                    	mPaint.setARGB(255, 0, 255, 0);
+                    	break;
+                    case 3:
+                    	mPaint.setARGB(255, 0, 0, 255);
+                    	break;
+                    default:
+                    	break;
+                    }
+            	
+            	
+            	
+            	
+            	
             	}
             	boolean useCenter = false;
                 //inner.. counter
@@ -651,33 +674,6 @@ public class TargetLiveWallpaper extends WallpaperService {
                 c.drawArc(new RectF(mLastTouchX - (i+30),mLastTouchY - (i+30), mLastTouchX + (i+30), mLastTouchY + (i+30)), 360-(rotationSpeed*SystemClock.uptimeMillis()*2%360), sweepAngle*4, useCenter, mPaint);
             }
             mPaint.setColor(oldColor);
-//adding conditional to finish animation... YAY
-//            if (mPulseN > 0)
-//            {
-//            	--mPulseN;
-//            }
-//            
-//            if (mTouchX >=0 && mTouchY >= 0) {                
-//
-//            	if(mPulseN <= 0)
-//            		mPulseN = numberOfRings;
-//                    
-//                // get relative dirs
-//                float diffX = mTouchX - mLastTouchX;
-//                float diffY = mTouchY - mLastTouchY;
-//                mCenterY1 = mCenterY1 + diffY;
-//                mCenterX1 = mCenterX1 + diffX;
-//                
-//                //store for next
-//                mLastTouchX = mTouchX;
-//                mLastTouchY = mTouchY;
-//
-//                
-//            }else{
-////            	mPulseN = 0; //reset?
-////            	mPulseN = 0; //reset?
-//            }
-            
         }
          
 

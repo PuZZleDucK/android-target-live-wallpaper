@@ -177,7 +177,7 @@
     <item>&quot;nine&quot;</item>
     <item>&quot;fiveteen&quot;</item>
     <item>&quot;twenty two&quot;</item>
-    <item>&quot;thirty two&quot;</item>
+    <item>&quot;twenty eight&quot;</item>
 </string-array>
 <string-array name="pulse_numbervalues">
     <item>&quot;2&quot;</item>
@@ -192,6 +192,16 @@
     <item>&quot;9&quot;</item>
     <item>&quot;15&quot;</item>
     <item>&quot;22&quot;</item>
-    <item>&quot;32&quot;</item>
+    <item>&quot;28&quot;</item>
+</string-array>
+<string-array name="target_animatenames">
+    <item>&quot;red&quot;</item>
+    <item>&quot;green&quot;</item>
+    <item>&quot;blue&quot;</item>
+</string-array>
+<string-array name="target_animatevalues">
+    <item>&quot;1&quot;</item>
+    <item>&quot;2&quot;</item>
+    <item>&quot;3&quot;</item>
 </string-array>
 </resources>
