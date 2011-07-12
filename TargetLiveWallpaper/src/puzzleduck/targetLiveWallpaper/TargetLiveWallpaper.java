@@ -93,24 +93,24 @@ public class TargetLiveWallpaper extends WallpaperService {
         private float mTopTargetX;
         private float mTopTargetY;
         
-        private float mLastTouchX = 250;//indent initial display
-        private float mLastTouchY = 350;
+        private float mLastTouchX = 239;//indent initial display
+        private float mLastTouchY = 239;
         
 
-        private boolean leftOn = false;
-        private boolean topOn = false;
+        private boolean leftOn = true;
+        private boolean topOn = true;
         private boolean quadOn = true;
         private boolean pulse3dOn = true;
     	private String shape = "diamond";
         
         private boolean discOn = true;
         private int discStyle = 1;
-        private boolean pulseOn = false;
+        private boolean pulseOn = true;
         private int numberOfRings = 8;
         private int spacingOfRings = 15;
         private int mPulseN = 0;
         
-        private boolean mouseOn = true;
+        private boolean mouseOn = false;
         String cursor = "debianswirl";//cursor_typenames
         private Bitmap mCursorImage;
 
@@ -143,8 +143,8 @@ public class TargetLiveWallpaper extends WallpaperService {
         	//3d targets
         	shape = prefs.getString("target_shape", "diamond");
             quadOn = prefs.getBoolean("target_quad_on", true);
-            leftOn = prefs.getBoolean("target_left_on", false);
-            topOn = prefs.getBoolean("target_top_on", false);
+            leftOn = prefs.getBoolean("target_left_on", true);
+            topOn = prefs.getBoolean("target_top_on", true);
             pulse3dOn =  prefs.getBoolean("target_dpulse_on", true);
             
             //rotating targets
@@ -215,8 +215,8 @@ public class TargetLiveWallpaper extends WallpaperService {
         	//3d targets
         	shape = prefs.getString("target_shape", "diamond");
             quadOn = prefs.getBoolean("target_quad_on", true);
-            leftOn = prefs.getBoolean("target_left_on", false);
-            topOn = prefs.getBoolean("target_top_on", false);
+            leftOn = prefs.getBoolean("target_left_on", true);
+            topOn = prefs.getBoolean("target_top_on", true);
             pulse3dOn =  prefs.getBoolean("target_dpulse_on", true);
             
             //rotating targets
@@ -228,7 +228,7 @@ public class TargetLiveWallpaper extends WallpaperService {
             cursor = prefs.getString("cursor_type", "debianswirl");//cursor_typenames
             
             //pulse settings:
-            pulseOn = prefs.getBoolean("target_pulse_on", false);
+            pulseOn = prefs.getBoolean("target_pulse_on", true);
             spacingOfRings = Integer.valueOf(prefs.getString("target_pulse_width", "15"));
             numberOfRings = Integer.valueOf(prefs.getString("target_pulse_number", "8"));
  

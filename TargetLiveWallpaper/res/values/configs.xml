@@ -148,7 +148,7 @@
 
 
 </string-array>
-<string-array name="cursor_typenames"><item>&quot;debianswirl&quot;</item><item>&quot;eclipseicon&quot;</item><item>&quot;gimpball&quot;</item><item>&quot;gimpcolorcircle&quot;</item><item>&quot;gimpheart&quot;</item><item>&quot;gnomefoot&quot;</item><item>&quot;gnomesupport&quot;</item><item>&quot;mozicon&quot;</item><item>&quot;robot&quot;</item><item>&quot;ubuntulogo&quot;</item>
+<string-array name="cursor_typenames"><item>&quot;Debian Swirl&quot;</item><item>&quot;Eclipse&quot;</item><item>&quot;Gimp Ball&quot;</item><item>&quot;Gimp Color Circle&quot;</item><item>&quot;Gimp Heart&quot;</item><item>&quot;Gnome Foot&quot;</item><item>&quot;Gnome Support&quot;</item><item>&quot;Fire Fox&quot;</item><item>&quot;Robot&quot;</item><item>&quot;Ubuntu Logo&quot;</item>
     
     
 </string-array>
