@@ -93,8 +93,8 @@ public class TargetLiveWallpaper extends WallpaperService {
         private float mTopTargetX;
         private float mTopTargetY;
         
-        private float mLastTouchX = 150;//indent initial display
-        private float mLastTouchY = 250;
+        private float mLastTouchX = 250;//indent initial display
+        private float mLastTouchY = 350;
         
 
         private boolean leftOn = false;

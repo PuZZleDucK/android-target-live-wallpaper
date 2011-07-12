@@ -19,9 +19,9 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- General -->
-    <skip />
+    <string name="target_wallpaper_service_label">Target Live Wallpaper</string><string name="target_settings">Settings</string><string name="wallpapers">Target Live Wallpaper</string><string name="target_settings_pulse_category_title">A pulsing target moving towards your finger</string><string name="target_settings_pulse_title">Display pulse target?</string><string name="target_settings_pulse_on_summary">Display pulse target.</string><string name="target_settings_pulse_off_summary">Don\'t display pulse target.</string><string name="target_settings_pulse_number_title">Number of rings...</string><string name="target_settings_pulse_number_summary">Number of rings to display during pulse</string><string name="target_settings_pulse_width_title">Width of pulse rings...</string><string name="target_settings_pulse_width_summary">How wide should space between pulse rings be</string><string name="target_settings_static_category_title">A basic static image</string><string name="target_settings_mouse_title">Display static target?</string><string name="target_settings_mouse_summary">Select whether to display a static target</string><string name="cursor_settings_title">Select target...</string><string name="cursor_settings_summary">Select from various target images.</string><string name="target_settings_3d_title">Settings for left, top &amp; quad 3D trackers</string><string name="target_settings_quad_title">Display Quad trackers?</string><string name="target_settings_quad_on_summary">Display spinning targets in all directions.</string><string name="target_settings_quad_off_summary">Don\'t display spinning targets.</string><string name="target_settings_left_title">Track along LHS?</string><string name="target_settings_left_on_summary">Track along left hand side of screen.</string><string name="target_settings_left_off_summary">Don\'t track left hand side of screen.</string><string name="target_settings_top_title">Track along top?</string><string name="target_settings_top_on_summary">Track along top of screen.</string><string name="target_settings_top_off_summary">Don\'t track along top of screen.</string><string name="target_settings_dpulse_title">Shift 3d tracker colors?</string><string name="target_settings_dpulse_on_summary">Pulse tracker objects - red</string><string name="target_settings_dpulse_off_summary">Don\'t pulse tracker objects - green</string><string name="target_settings_title">Select 3D shape...</string><string name="target_settings_summary">Choose whitch 3D model to display ...</string><string name="target_settings_animated_title">Animated Target settings</string><string name="target_settings_disc_title">Display rotating discs?</string><string name="target_settings_disc_on_summary">Display rotating discs.</string><string name="target_settings_disc_off_summary">Don\'t display rotating discs.</string><string name="target_settings_disctype_title">Color of rotating discs...</string><string name="target_settings_disctype_summary">Select a color for the animated targets</string><skip /><string name="target_settings_pulse_summary">!!!Select whether to display pulse target</string>
     <!-- Application name -->
-    <string name="wallpapers">Target Live Wallpaper</string>
+    
 
     <!-- Wallpaper showing a cube -->
 
@@ -29,31 +29,31 @@
 
     <!-- Wallpaper showing a cube, renderscript version -->
 
-    <string name="target_settings">Settings</string>
-    <string name="target_settings_title">Select shape for quad &amp; track</string>
-    <string name="target_settings_summary">Choose whitch graphics to display ...</string>
-    <string name="target_wallpaper_service_label">Target Live Wallpaper</string>
-    <string name="target_settings_left_summary">Select whether to track vertical with 3D graphics</string><string name="target_settings_left_on_summary">Track LHS.</string><string name="target_settings_left_off_summary">Don\'t track LHS.</string><string name="target_settings_left_title">Track along LHS?</string><string name="target_settings_top_summary">Select whether to track horizontal with 3D graphics</string><string name="target_settings_top_on_summary">Track top.</string><string name="target_settings_top_off_summary">Don\'t track top.</string><string name="target_settings_top_title">Track along top?</string><string name="target_settings_disc_summary">Select whether to display rotating discs</string><string name="target_settings_disc_on_summary">Display rotating discs.</string><string name="target_settings_disc_off_summary">Don\'t display disc.</string><string name="target_settings_disc_title">Display rotating discs?</string><string name="target_settings_quad_summary">Select whether to display quad spinning objects</string><string name="target_settings_quad_on_summary">Display quad targets.</string><string name="target_settings_quad_off_summary">Don\'t display quad targets.</string><string name="target_settings_quad_title">Display quad spinning objects?</string><string name="target_settings_pulse_summary">Select whether to display pulse target</string><string name="target_settings_pulse_on_summary">Display pulse target.</string><string name="target_settings_pulse_off_summary">Don\'t display pulse targets.</string><string name="target_settings_pulse_title">Display pulse target?</string>
-    <string name="target_settings_mouse_title">Display static targets</string>
-    <string name="target_settings_mouse_summary">Select whether to display a static target</string>
-    <string name="cursor_settings_title">Select target:</string>
-    <string name="cursor_settings_summary">Select from various \'targets\'</string>
-    <string name="target_settings_pulse_category_title">Pulsing target settings</string>
-    <string name="target_settings_pulse_category_summary">Pulse config, number, width, etc</string>
-    <string name="target_settings_pulse_number_title">Number of rings to display</string>
-    <string name="target_settings_pulse_number_summary">Number of rings to display</string>
-    <string name="target_settings_pulse_width_title">Width of pulse rings</string>
-    <string name="target_settings_pulse_width_summary">How wide</string>
-    <string name="target_settings_static_category_title">Static Image LWP</string>
-    <string name="target_settings_static_category_summary">Settings for static target display</string>
-    <string name="target_settings_3d_title">Settings for 3D trackers</string>
-    <string name="target_settings_3d_summary">Display settings for 3D objects</string>
-    <string name="target_settings_animated_title">Animated Target settings</string>
-    <string name="target_settings_animated_summary">Settings for animated targets</string>
-    <string name="target_settings_disctype_title">Color of animated discs</string>
-    <string name="target_settings_disctype_summary">Color for animated targets</string>
-    <string name="target_settings_dpulse_title">Shift color of 3d trackers</string>
-    <string name="target_settings_dpulse_summary">Shuould I pulsate colors</string>
-    <string name="target_settings_dpulse_off_summary">Don\'t pulse - green</string>
-    <string name="target_settings_dpulse_on_summary">Pulse - red</string>
+    
+    
+    
+    <string name="target_settings_pulse_category_summary">!!!Pulse config, number, width, etc</string>
+    <string name="target_settings_left_summary">!!!Select whether to track vertical with 3D graphics</string><string name="target_settings_top_summary">!!!Select whether to track horizontal with 3D graphics</string><string name="target_settings_disc_summary">!!!Select whether to display rotating discs</string><string name="target_settings_quad_summary">!!!Select whether to display quad spinning objects</string>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <string name="target_settings_static_category_summary">!!!Settings for static target display</string>
+    
+    <string name="target_settings_3d_summary">!!!Display settings for 3D objects</string>
+    
+    <string name="target_settings_animated_summary">!!!Settings for animated targets</string>
+    
+    
+    
+    <string name="target_settings_dpulse_summary">!!!Shuould I pulsate colors</string>
+    
+    
 </resources>
