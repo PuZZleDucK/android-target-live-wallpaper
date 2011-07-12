@@ -106,8 +106,8 @@ public class TargetLiveWallpaper extends WallpaperService {
         private boolean discOn = true;
         private int discStyle = 1;
         private boolean pulseOn = true;
-        private int numberOfRings = 8;
         private int spacingOfRings = 15;
+        private int numberOfRings = 16;
         private int mPulseN = 0;
         
         private boolean mouseOn = false;
@@ -230,8 +230,12 @@ public class TargetLiveWallpaper extends WallpaperService {
             //pulse settings:
             pulseOn = prefs.getBoolean("target_pulse_on", true);
             spacingOfRings = Integer.valueOf(prefs.getString("target_pulse_width", "15"));
-            numberOfRings = Integer.valueOf(prefs.getString("target_pulse_number", "8"));
+            numberOfRings = Integer.valueOf(prefs.getString("target_pulse_number", "16"));
  
+            
+            
+            
+            
         }
 
         @Override
