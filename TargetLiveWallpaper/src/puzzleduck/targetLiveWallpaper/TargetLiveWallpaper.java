@@ -100,6 +100,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         private boolean leftOn = false;
         private boolean topOn = false;
         private boolean quadOn = true;
+        private boolean pulse3dOn = true;
     	private String shape = "diamond";
         
         private boolean discOn = true;
@@ -144,6 +145,7 @@ public class TargetLiveWallpaper extends WallpaperService {
             quadOn = prefs.getBoolean("target_quad_on", true);
             leftOn = prefs.getBoolean("target_left_on", false);
             topOn = prefs.getBoolean("target_top_on", false);
+            pulse3dOn =  prefs.getBoolean("target_dpulse_on", true);
             
             //rotating targets
             discOn = prefs.getBoolean("target_disc_on", true);
@@ -154,9 +156,9 @@ public class TargetLiveWallpaper extends WallpaperService {
             cursor = prefs.getString("cursor_type", "debianswirl");//cursor_typenames
             
             //pulse settings:
-            pulseOn = prefs.getBoolean("target_pulse_on", false);
+            pulseOn = prefs.getBoolean("target_pulse_on", true);
             spacingOfRings = Integer.valueOf(prefs.getString("target_pulse_width", "15"));
-            numberOfRings = Integer.valueOf(prefs.getString("target_pulse_number", "8"));
+            numberOfRings = Integer.valueOf(prefs.getString("target_pulse_number", "16"));
 
            // read the 3D model from the resource
             readModel(shape);
@@ -215,6 +217,7 @@ public class TargetLiveWallpaper extends WallpaperService {
             quadOn = prefs.getBoolean("target_quad_on", true);
             leftOn = prefs.getBoolean("target_left_on", false);
             topOn = prefs.getBoolean("target_top_on", false);
+            pulse3dOn =  prefs.getBoolean("target_dpulse_on", true);
             
             //rotating targets
             discOn = prefs.getBoolean("target_disc_on", true);
@@ -333,7 +336,7 @@ public class TargetLiveWallpaper extends WallpaperService {
 
                     if(mouseOn)
                     {
-                    	drawMouseTarget(c);	
+                    	drawStaticTarget(c);	
                     }
                 	
                     
@@ -394,9 +397,16 @@ public class TargetLiveWallpaper extends WallpaperService {
             c.save();
             c.drawColor(0x00000000);
             int oldColor = mPaint.getColor();
-            mPaint.setColor(0xff00ff00);
-
             long now = SystemClock.elapsedRealtime();
+            
+            if(!pulse3dOn)
+            {
+                //static
+            	mPaint.setColor(0xff00ff00);
+            }else{
+                //pulse
+                mPaint.setColor(Color.argb(255,255-((int)now/5%200),0,0));     	
+            }
             float xrot = (float)0;
             float yrot = (float)now/400;
             rotateAndProjectPointsTop(xrot, yrot);
@@ -421,11 +431,16 @@ public class TargetLiveWallpaper extends WallpaperService {
             float yrot = (float) 0;
             rotateAndProjectPointsLeft(xrot, yrot);
 
+
+            if(!pulse3dOn)
+            {
+                //static
+            	mPaint.setColor(0xff00ff00);
+            }else{
+                //pulse
+                mPaint.setColor(Color.argb(255,255-((int)now/5%200),0,0));     	
+            }
             
-            mPaint.setColor(0xFFFFFFFF-(0x00000001 * ((int)now)/5 ));
-            
-            mPaint.setColor(Color.argb(255,255-((int)now/5%200),0,0));       //0-255 or 0xAARRGGBB
-            //argb(int alpha, int red, int green, int blue)
             
             mLeftTargetX = 20;
             mLeftTargetY = mLastTouchY;
@@ -610,8 +625,7 @@ public class TargetLiveWallpaper extends WallpaperService {
             
         }
         
-        
-        void drawMouseTarget(Canvas c) {
+        void drawStaticTarget(Canvas c) {
                 //what about icons??? duhh... removing cursors and centering target
             c.drawBitmap(mCursorImage, mLastTouchX - (mCursorImage.getHeight()/2), mLastTouchY - (mCursorImage.getWidth()/2), mPaint);
         }
@@ -620,11 +634,8 @@ public class TargetLiveWallpaper extends WallpaperService {
         	//case: discStyle.... rgb the hard way
             int oldColor = mPaint.getColor();
 
-            
-
-            
             int startRings = 48;
-            int widthOfRings = 16;
+            int widthOfRings = 8;
             int widthOfOutline = 1;
             for(int i = startRings-widthOfOutline; i < startRings+widthOfRings+widthOfOutline; i++)
             {
@@ -658,10 +669,7 @@ public class TargetLiveWallpaper extends WallpaperService {
                     	break;
                     }
             	
-            	
-            	
-            	
-            	
+
             	}
             	boolean useCenter = false;
                 //inner.. counter
@@ -677,9 +685,6 @@ public class TargetLiveWallpaper extends WallpaperService {
         }
          
 
-        
-        
-        
         
         void drawConkey(Canvas c) {
             c.drawColor(0x00000000);
