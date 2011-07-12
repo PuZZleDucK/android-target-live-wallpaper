@@ -19,7 +19,7 @@
 -->
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="puzzleduck.targetLiveWallpaper" android:versionName="2" android:versionCode="2">
+    android:versionName="2" package="com.puzzleduck.targetLiveWallpaper" android:versionCode="2">
 
     <uses-sdk android:targetSdkVersion="9" android:minSdkVersion="7"/>
     <uses-feature android:name="android.software.live_wallpaper" />
@@ -34,7 +34,7 @@
 
         <service
             android:label="@string/target_wallpaper_service_label"
-            android:permission="android.permission.BIND_WALLPAPER" android:name="puzzleduck.targetLiveWallpaper.TargetLiveWallpaper">
+            android:permission="android.permission.BIND_WALLPAPER" android:name="TargetLiveWallpaper">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
             </intent-filter>
@@ -42,8 +42,9 @@
         </service>
         <activity
             android:label="@string/target_settings"
+            android:name="TargetLiveWallpaperSettings"
             android:theme="@android:style/Theme.Light.WallpaperSettings"
-            android:exported="true" android:name="puzzleduck.targetLiveWallpaper.TargetLiveWallpaperSettings">
+            android:exported="true">
         </activity>
 
     </application>

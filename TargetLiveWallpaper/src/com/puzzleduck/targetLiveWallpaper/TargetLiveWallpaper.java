@@ -22,7 +22,7 @@
 // might try to change models now...
 //
 
-package puzzleduck.targetLiveWallpaper;
+package com.puzzleduck.targetLiveWallpaper;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
