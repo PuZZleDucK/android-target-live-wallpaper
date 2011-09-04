@@ -313,6 +313,9 @@ public class TargetLiveWallpaper extends WallpaperService {
                 c = holder.lockCanvas();
                 if (c != null) {
                 updateTouchPoint(c);
+//DEBUG
+                drawConkey(c);
+//Select modes                
                 if(pulseOn)
                   {
                         drawTouchPointPulse(c);
@@ -322,7 +325,6 @@ public class TargetLiveWallpaper extends WallpaperService {
                       drawTouchDisc(c);
                   }   
                   
-//                  drawConkey(c);
                     if(topOn)
                     {
                     	drawTopTarget(c);
@@ -609,25 +611,72 @@ public class TargetLiveWallpaper extends WallpaperService {
         	   c.drawColor(0xff000000);   
         }
         
+
+        private float[] flareX = new float[11];
+        private float[] flareY = new float[11];
+        private int flareCount = 0;
         
         void drawTouchPointPulse(Canvas c) {
-            for(int i = 0; i <= numberOfRings; i++)
-            {// want to do configurable color one day...
-                mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
-                c.drawCircle(mLastTouchX, mLastTouchY, spacingOfRings * i, mPaint);
-            }
-// conditional to finish animation.
-            if (mPulseN > 0)
-            {
-            	--mPulseN;
-            }
+//            for(int i = 0; i <= numberOfRings; i++)
+//            {// want to do configurable color one day...
+//                mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
+//                c.drawCircle(mLastTouchX, mLastTouchY, spacingOfRings * i, mPaint);
+//            }
+//// conditional to finish animation.
+//            if (mPulseN > 0)
+//            {
+//            	--mPulseN;
+//            }
+//            
+//            if (mTouchX >=0 && mTouchY >= 0) {         
+//            	if(mPulseN <= 0)
+//            		mPulseN = numberOfRings;
+//            }
             
-            if (mTouchX >=0 && mTouchY >= 0) {         
-            	if(mPulseN <= 0)
-            		mPulseN = numberOfRings;
-            }
+        	
+        	
+        	//add after flare...viral...crack
+            // DEMO:   bubbles!!! yay
+        	
+            //build on old flare/virs
+        	for( int flareI = 0; flareI < flareCount; flareI++)
+        	{
+        		
+//        		flareX[flareI] = flareX[flareI] + 20;
+        		flareY[flareI] =  (float) (flareY[flareI] + Math.sin( SystemClock.elapsedRealtime()  )-1.01);
+
+        	}
+
+        	
             
-        }
+        	
+            //new flare 
+            if (mTouchX >=0 && mTouchY >= 0) {                
+            	if( flareCount <= 10 )
+            	{
+            		flareX[flareCount] = mTouchX;
+            		flareY[flareCount] = mTouchY;
+            		flareCount++;
+            	}else
+            	{//wipe
+            		flareCount = 0;
+            	}
+            }
+
+//render flares            
+        	for( int flareI = 0; flareI < flareCount; flareI++)
+        	{
+        	
+        		mPaint.setColor(0xFF00FF00);
+        		c.drawCircle(flareX[flareI], flareY[flareI], 10, mPaint);
+                
+        	}
+
+            
+            
+            
+            
+        }//pulse
         
         void drawStaticTarget(Canvas c) {
                 //what about icons??? duhh... removing cursors and centering target
@@ -702,15 +751,17 @@ public class TargetLiveWallpaper extends WallpaperService {
             c.drawText("Up: " + SystemClock.uptimeMillis(), 		5, 120, mPaint);
             c.drawText("Now: " + SystemClock.elapsedRealtime(), 		5, 140, mPaint);
             c.drawText("This thread: " + SystemClock.currentThreadTimeMillis(), 		5, 160, mPaint);
-            c.drawText("This is preview: " + this.isPreview(), 		5, 180, mPaint);
-            c.drawText("This is viible: " + this.isVisible(), 		5, 200, mPaint);
-            c.drawText("This is viible: " , 		5, 220, mPaint);
+//            c.drawText("This is preview: " + this.isPreview(), 		5, 180, mPaint);
+//            c.drawText("This is viible: " + this.isVisible(), 		5, 200, mPaint);
+//            c.drawText("This is viible: " , 		5, 220, mPaint);
             
-        	c.drawText("color = " + mPaint.getColor(), 		5, 590, mPaint);
-        	c.drawText("mTouchX = " + mTouchX, 		5, 610, mPaint);
-            c.drawText("mTouchY = " + mTouchY, 		5, 630, mPaint);
-            c.drawText("mCenterX1= " + mCenterX1, 5, 690, mPaint);
-            c.drawText("mCenterY1= " + mCenterY1, 5, 710, mPaint);
+//        	c.drawText("color = " + mPaint.getColor(), 		5, 590, mPaint);
+//        	c.drawText("mTouchX = " + mTouchX, 		5, 610, mPaint);
+//            c.drawText("mTouchY = " + mTouchY, 		5, 630, mPaint);
+//            c.drawText("mCenterX1= " + mCenterX1, 5, 690, mPaint);
+//            c.drawText("mCenterY1= " + mCenterY1, 5, 710, mPaint);
+            c.drawText("flareCount= " + flareCount, 5, 210, mPaint);
+            
             mPaint.setColor(oldColor);
 
 //          c.drawText("diffX = " + diffX, 5, 650, mPaint);
