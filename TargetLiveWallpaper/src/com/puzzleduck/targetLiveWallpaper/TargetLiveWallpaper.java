@@ -634,13 +634,15 @@ public class TargetLiveWallpaper extends WallpaperService {
 //            	if(mPulseN <= 0)
 //            		mPulseN = numberOfRings;
 //            }
-            
-        	
-        	
+        	drawTouchPointFlare(c);
+
+        }//pulse
+
+        void drawTouchPointFlare(Canvas c) {
         	//add after flare...viral...crack
             // DEMO:   bubbles!!! yay
         	
-            //build on old flare/virs
+//move  old flare/virs
         	for( int flareI = 0; flareI < flareCount; flareI++)
         	{
         		
@@ -662,7 +664,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         	
             
         	
-            //new flare 
+//new flare 
             if (mTouchX >=0 && mTouchY >= 0) {                
             	if( flareCount <= 10 )
             	{
@@ -679,7 +681,6 @@ public class TargetLiveWallpaper extends WallpaperService {
 //render flares          
         	for( int flareI = 0; flareI < flareCount; flareI++)
         	{
-
 //        		c.drawCircle(flareX[flareI], flareY[flareI], 3, mPaint);
         		mPaint.setColor(0xFF00FF00);
         		if(flareTime[flareI] < triggerTime)
@@ -693,10 +694,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         	}
 
             
-            
-            
-            
-        }//pulse
+        }//flare
         
         void drawStaticTarget(Canvas c) {
                 //what about icons??? duhh... removing cursors and centering target
