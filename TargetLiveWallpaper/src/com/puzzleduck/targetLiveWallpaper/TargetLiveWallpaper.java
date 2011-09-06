@@ -24,6 +24,10 @@
 
 package com.puzzleduck.targetLiveWallpaper;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
+
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -35,8 +39,11 @@ import android.graphics.RectF;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.service.wallpaper.WallpaperService;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+
+
 
 
 //This animated wallpaper draws many user selectable items... target, trackers, cursor, etc
@@ -44,6 +51,10 @@ public class TargetLiveWallpaper extends WallpaperService {
     public static final String SHARED_PREFS_NAME="target_lwp_settings";
 
 
+    private static final String TAG = "TargetLiveWallpaper";
+
+    private ArrayList<FlareData> flareList;
+    
     
     static class ThreeDPoint {
         float x;
@@ -108,7 +119,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         private boolean pulseOn = true;
         private int spacingOfRings = 15;
         private int numberOfRings = 16;
-        private int mPulseN = 0;
+//        private int mPulseN = 0;
         
         private boolean mouseOn = false;
         String cursor = "debianswirl";//cursor_typenames
@@ -210,6 +221,9 @@ public class TargetLiveWallpaper extends WallpaperService {
             super.onCreate(surfaceHolder);
             setTouchEventsEnabled(true);
            
+            //init flare list
+            flareList = new ArrayList<FlareData>(11);
+            
             //maybe just if null??? .. using mPrefs now... hopefully this will be resolved now
             SharedPreferences prefs = mPrefs;            
         	//3d targets
@@ -644,69 +658,129 @@ public class TargetLiveWallpaper extends WallpaperService {
         //  -
         //  -type (graphics used... not used yet)
 
-        private float[] flareX = new float[11];
-        private float[] flareY = new float[11];
-        private float[] flareTime = new float[11];
-        private int flareCount = 0;
-        private int triggerTime = 50;
+
+//        public class Flare {
+//            FlareData data = new FlareData();
+//
+//			Flare(float inx, float iny, float intilt, int incolor1, int incolor2, int intype)
+//            {
+//                data.setX(inx);
+//                data.setY(iny);
+//                data.setTime(0);
+//                data.setTriggerTime(50);
+//                data.setTilt(intilt);
+//                data.setColor1(incolor1);
+//                data.setColor2(incolor2);
+//                data.setType(0); 
+//            }
+//        }
+        
+//        private float[] flareX = new float[11];
+//        private float[] flareY = new float[11];
+//        private float[] flareTime = new float[11];
+//        private int flareCount = 0;
+//        private int triggerTime = 50;
         
         void drawTouchPointFlare(Canvas c) {
+            Log.d(TAG, "===Start Flare: ");
         	//add after flare...viral...crack
             // DEMO:   bubbles!!! yay
         	
-//move  old flare/virs
-        	for( int flareI = 0; flareI < flareCount; flareI++)
-        	{
-        		
-        		if(flareTime[flareI] < triggerTime)
-        		{
-        			flareY[flareI] =  (float) (flareY[flareI] +  Math.sin( SystemClock.elapsedRealtime()  )-0.1 * flareTime[flareI]);
-            		flareX[flareI] = flareX[flareI] + (float) Math.sin( SystemClock.elapsedRealtime());
-        		}else
-        		{
-        			//exploding... still
-        		}
-        		flareTime[flareI]++;
-        	}
 
-        	
-            
-        	
 //new flare 
             if (mTouchX >=0 && mTouchY >= 0) {                
-            	if( flareCount <= 10 )
-            	{
-            		flareX[flareCount] = mTouchX;
-            		flareY[flareCount] = mTouchY;
-            		flareTime[flareCount] = 0;
-            		flareCount++;
-            	}else
-            	{//wipe
-            		flareCount = 0;
-            	}
+//            	if( flareCount <= 10 )
+//            	{
+//            		flareX[flareCount] = mTouchX;
+//            		flareY[flareCount] = mTouchY;
+//            		flareTime[flareCount] = 0;
+//            		flareCount++;
+//            	}else
+//            	{//wipe
+//            		flareCount = 0;
+//            	}
+            	//list imp:
+                flareList.add(new FlareData(mTouchX, mTouchY, 5, 0xFF00FF00, 0xFF0000FF, 0));
+            	
+            	
+            	
             }
 
 //render flares          
-        	for( int flareI = 0; flareI < flareCount; flareI++)
-        	{
-//        		c.drawCircle(flareX[flareI], flareY[flareI], 3, mPaint);
-        		if(flareTime[flareI] < triggerTime)
-        		{
-            		mPaint.setColor(0xFF00FF00);
-            		c.drawCircle(flareX[flareI], flareY[flareI], 3, mPaint);
-        		}else{
-        			if(flareTime[flareI] < triggerTime*2)
-        			{
-	            		mPaint.setColor(0xFF0000FF);
-	            		c.drawCircle(flareX[flareI]-10, flareY[flareI]-10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
-	            		c.drawCircle(flareX[flareI]-10, flareY[flareI]+10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
-	            		c.drawCircle(flareX[flareI]+10, flareY[flareI]-10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
-	            		c.drawCircle(flareX[flareI]+10, flareY[flareI]+10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
-        			}
-            		
-        		}
-                
-        	}
+//        	for( int flareI = 0; flareI < flareCount; flareI++)
+//        	{
+////        		c.drawCircle(flareX[flareI], flareY[flareI], 3, mPaint);
+//        		if(flareTime[flareI] < triggerTime)
+//        		{
+//            		mPaint.setColor(0xFF00FF00);
+//            		c.drawCircle(flareX[flareI], flareY[flareI], 3, mPaint);
+//        		}else{
+//        			if(flareTime[flareI] < triggerTime*2)
+//        			{
+//	            		mPaint.setColor(0xFF0000FF);
+//	            		c.drawCircle(flareX[flareI]-10, flareY[flareI]-10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
+//	            		c.drawCircle(flareX[flareI]-10, flareY[flareI]+10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
+//	            		c.drawCircle(flareX[flareI]+10, flareY[flareI]-10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
+//	            		c.drawCircle(flareX[flareI]+10, flareY[flareI]+10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
+//        			}
+//            		
+//        		}
+//                
+//        	}
+        	//flare list:
+          //now incorperating move  old flare/virs
+            
+        	if (flareList.size() > 0) {
+        		FlareData thisFlare;
+				for (Iterator<FlareData> fIterator = flareList.iterator(); fIterator
+						.hasNext();) {
+					thisFlare = fIterator.next();
+
+					//move  old flare/virs
+
+					if (thisFlare.getTime() < thisFlare.getTriggerTime()) {
+						thisFlare.setY((float) (thisFlare.getY()
+								+ Math.sin(SystemClock.elapsedRealtime()) - 0.1 * thisFlare.getTime()));
+						thisFlare.setX(thisFlare.getX()
+								+ (float) Math.sin(SystemClock
+										.elapsedRealtime()));
+					} else {
+						//exploding... still
+					}
+					thisFlare.setTime(thisFlare.getTime() + 1);
+
+					//render
+					if (thisFlare.getTime() < thisFlare.getTriggerTime()) {
+						mPaint.setColor(0xFF00FF00);
+						c.drawCircle(thisFlare.getX(), thisFlare.getY(), 3, mPaint);
+					} else {
+						if (thisFlare.getTime() < thisFlare.getTriggerTime() * 2) {
+							mPaint.setColor(0xFF0000FF);
+							c.drawCircle(
+									thisFlare.getX() - 10,
+									thisFlare.getY() - 10,
+									1 * (thisFlare.getTime() - thisFlare.getTriggerTime()),
+									mPaint);
+							c.drawCircle(
+									thisFlare.getX() - 10,
+									thisFlare.getY() + 10,
+									1 * (thisFlare.getTime() - thisFlare.getTriggerTime()),
+									mPaint);
+							c.drawCircle(
+									thisFlare.getX() + 10,
+									thisFlare.getY() - 10,
+									1 * (thisFlare.getTime() - thisFlare.getTriggerTime()),
+									mPaint);
+							c.drawCircle(
+									thisFlare.getX() + 10,
+									thisFlare.getY() + 10,
+									1 * (thisFlare.getTime() - thisFlare.getTriggerTime()),
+									mPaint);
+						}
+
+					}
+				}
+			}
 
             
         }//flare
@@ -793,7 +867,7 @@ public class TargetLiveWallpaper extends WallpaperService {
 //            c.drawText("mTouchY = " + mTouchY, 		5, 630, mPaint);
 //            c.drawText("mCenterX1= " + mCenterX1, 5, 690, mPaint);
 //            c.drawText("mCenterY1= " + mCenterY1, 5, 710, mPaint);
-            c.drawText("flareCount= " + flareCount, 5, 210, mPaint);
+            c.drawText("flareCount= " + flareList.size(), 5, 210, mPaint);
             
             mPaint.setColor(oldColor);
 
