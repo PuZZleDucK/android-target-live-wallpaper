@@ -616,6 +616,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         private float[] flareY = new float[11];
         private float[] flareTime = new float[11];
         private int flareCount = 0;
+        private int triggerTime = 50;
         
         void drawTouchPointPulse(Canvas c) {
 //            for(int i = 0; i <= numberOfRings; i++)
@@ -643,16 +644,19 @@ public class TargetLiveWallpaper extends WallpaperService {
         	for( int flareI = 0; flareI < flareCount; flareI++)
         	{
         		
-//        		flareX[flareI] = flareX[flareI] + 20;
-        		flareY[flareI] =  (float) (flareY[flareI] +  Math.sin( SystemClock.elapsedRealtime()  )-1.01 * flareTime[flareI]);
-        		flareTime[flareI]++;
-        		if(flareTime[flareCount] % 10 == 0)
+        		flareX[flareI] = flareX[flareI] + (float) Math.sin( SystemClock.elapsedRealtime());
+        		if(flareTime[flareI] < triggerTime)
         		{
-        			
-        		}else
-        		{
-        			
+        			flareY[flareI] =  (float) (flareY[flareI] +  Math.sin( SystemClock.elapsedRealtime()  )-0.1 * flareTime[flareI]);
         		}
+        		flareTime[flareI]++;
+//        		if(flareTime[flareCount] % 10 == 0)
+//        		{
+//        			
+//        		}else
+//        		{
+//        			
+//        		}
         	}
 
         	
@@ -672,17 +676,17 @@ public class TargetLiveWallpaper extends WallpaperService {
             	}
             }
 
-//render flares            
+//render flares          
         	for( int flareI = 0; flareI < flareCount; flareI++)
         	{
 
 //        		c.drawCircle(flareX[flareI], flareY[flareI], 3, mPaint);
         		mPaint.setColor(0xFF00FF00);
-        		if(flareTime[flareI] < 100)
+        		if(flareTime[flareI] < triggerTime)
         		{
             		c.drawCircle(flareX[flareI], flareY[flareI], 3, mPaint);
         		}else{
-            		c.drawCircle(flareX[flareI], flareY[flareI], 1 * (flareTime[flareI]-100) , mPaint);
+            		c.drawCircle(flareX[flareI], flareY[flareI], 1 * (flareTime[flareI]-triggerTime) , mPaint);
         			
         		}
                 
