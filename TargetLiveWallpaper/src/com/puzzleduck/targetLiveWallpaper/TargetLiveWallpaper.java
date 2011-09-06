@@ -612,11 +612,6 @@ public class TargetLiveWallpaper extends WallpaperService {
         }
         
 
-        private float[] flareX = new float[11];
-        private float[] flareY = new float[11];
-        private float[] flareTime = new float[11];
-        private int flareCount = 0;
-        private int triggerTime = 50;
         
         void drawTouchPointPulse(Canvas c) {
 //            for(int i = 0; i <= numberOfRings; i++)
@@ -638,6 +633,23 @@ public class TargetLiveWallpaper extends WallpaperService {
 
         }//pulse
 
+        
+        
+        //Time to object-ize the flare
+        //props:
+        //  -x,y
+        //  -time
+        //  -tilt tendancy (left/right/streight)
+        //  -colors
+        //  -
+        //  -type (graphics used... not used yet)
+
+        private float[] flareX = new float[11];
+        private float[] flareY = new float[11];
+        private float[] flareTime = new float[11];
+        private int flareCount = 0;
+        private int triggerTime = 50;
+        
         void drawTouchPointFlare(Canvas c) {
         	//add after flare...viral...crack
             // DEMO:   bubbles!!! yay
@@ -646,19 +658,15 @@ public class TargetLiveWallpaper extends WallpaperService {
         	for( int flareI = 0; flareI < flareCount; flareI++)
         	{
         		
-        		flareX[flareI] = flareX[flareI] + (float) Math.sin( SystemClock.elapsedRealtime());
         		if(flareTime[flareI] < triggerTime)
         		{
         			flareY[flareI] =  (float) (flareY[flareI] +  Math.sin( SystemClock.elapsedRealtime()  )-0.1 * flareTime[flareI]);
+            		flareX[flareI] = flareX[flareI] + (float) Math.sin( SystemClock.elapsedRealtime());
+        		}else
+        		{
+        			//exploding... still
         		}
         		flareTime[flareI]++;
-//        		if(flareTime[flareCount] % 10 == 0)
-//        		{
-//        			
-//        		}else
-//        		{
-//        			
-//        		}
         	}
 
         	
@@ -682,13 +690,20 @@ public class TargetLiveWallpaper extends WallpaperService {
         	for( int flareI = 0; flareI < flareCount; flareI++)
         	{
 //        		c.drawCircle(flareX[flareI], flareY[flareI], 3, mPaint);
-        		mPaint.setColor(0xFF00FF00);
         		if(flareTime[flareI] < triggerTime)
         		{
+            		mPaint.setColor(0xFF00FF00);
             		c.drawCircle(flareX[flareI], flareY[flareI], 3, mPaint);
         		}else{
-            		c.drawCircle(flareX[flareI], flareY[flareI], 1 * (flareTime[flareI]-triggerTime) , mPaint);
-        			
+        			if(flareTime[flareI] < triggerTime*2)
+        			{
+	            		mPaint.setColor(0xFF0000FF);
+	            		c.drawCircle(flareX[flareI]-10, flareY[flareI]-10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
+	            		c.drawCircle(flareX[flareI]-10, flareY[flareI]+10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
+	            		c.drawCircle(flareX[flareI]+10, flareY[flareI]-10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
+	            		c.drawCircle(flareX[flareI]+10, flareY[flareI]+10, 1 * (flareTime[flareI]-triggerTime) , mPaint);
+        			}
+            		
         		}
                 
         	}
