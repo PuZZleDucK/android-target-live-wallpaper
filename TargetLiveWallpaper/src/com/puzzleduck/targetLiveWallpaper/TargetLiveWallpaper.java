@@ -119,7 +119,9 @@ public class TargetLiveWallpaper extends WallpaperService {
         private boolean pulseOn = true;
         private int spacingOfRings = 15;
         private int numberOfRings = 16;
-//        private int mPulseN = 0;
+        private int mPulseN = 0;
+        
+        private boolean flareOn = true;
         
         private boolean mouseOn = false;
         String cursor = "debianswirl";//cursor_typenames
@@ -170,6 +172,9 @@ public class TargetLiveWallpaper extends WallpaperService {
             pulseOn = prefs.getBoolean("target_pulse_on", true);
             spacingOfRings = Integer.valueOf(prefs.getString("target_pulse_width", "15"));
             numberOfRings = Integer.valueOf(prefs.getString("target_pulse_number", "16"));
+            
+            //flare settings:
+            flareOn = prefs.getBoolean("target_flare_on", true);
 
            // read the 3D model from the resource
             readModel(shape);
@@ -240,11 +245,15 @@ public class TargetLiveWallpaper extends WallpaperService {
             //static targets
             mouseOn = prefs.getBoolean("target_mouse_on", false);
             cursor = prefs.getString("cursor_type", "debianswirl");//cursor_typenames
-            
+
             //pulse settings:
             pulseOn = prefs.getBoolean("target_pulse_on", true);
             spacingOfRings = Integer.valueOf(prefs.getString("target_pulse_width", "15"));
             numberOfRings = Integer.valueOf(prefs.getString("target_pulse_number", "16"));
+ 
+
+            //flare settings:
+            flareOn = prefs.getBoolean("target_flare_on", true);
  
             
             
@@ -328,7 +337,7 @@ public class TargetLiveWallpaper extends WallpaperService {
                 if (c != null) {
                 updateTouchPoint(c);
 //DEBUG
-                drawConkey(c);
+//                drawConkey(c);
 //Select modes                
                 if(pulseOn)
                   {
@@ -336,30 +345,33 @@ public class TargetLiveWallpaper extends WallpaperService {
                   }
                   if(discOn)
                   {
-//                      drawTouchDisc(c);
+                      drawTouchDisc(c);
                   }   
                   
                     if(topOn)
                     {
-//                    	drawTopTarget(c);
+                    	drawTopTarget(c);
                     }
                     if(leftOn)
                     {
-//                    	drawLeftTarget(c);
+                    	drawLeftTarget(c);
                     }
 
                     if(quadOn)
                     {
-//                    	drawQuadTarget(c);	
+                    	drawQuadTarget(c);	
                     }
                    
 
                     if(mouseOn)
                     {
-//                    	drawStaticTarget(c);	
+                    	drawStaticTarget(c);	
                     }
-                	
-                    
+
+                    if(flareOn)
+                    {
+                    	drawTouchPointFlare(c);
+                    }
                 }
             } finally { 
                 if (c != null) holder.unlockCanvasAndPost(c);
@@ -628,22 +640,22 @@ public class TargetLiveWallpaper extends WallpaperService {
 
         
         void drawTouchPointPulse(Canvas c) {
-//            for(int i = 0; i <= numberOfRings; i++)
-//            {// want to do configurable color one day...
-//                mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
-//                c.drawCircle(mLastTouchX, mLastTouchY, spacingOfRings * i, mPaint);
-//            }
-//// conditional to finish animation.
-//            if (mPulseN > 0)
-//            {
-//            	--mPulseN;
-//            }
-//            
-//            if (mTouchX >=0 && mTouchY >= 0) {         
-//            	if(mPulseN <= 0)
-//            		mPulseN = numberOfRings;
-//            }
-        	drawTouchPointFlare(c);
+            for(int i = 0; i <= numberOfRings; i++)
+            {// want to do configurable color one day...
+                mPaint.setColor(0xffff0000-(0x09000000 * ((i-mPulseN)%numberOfRings) ));
+                c.drawCircle(mLastTouchX, mLastTouchY, spacingOfRings * i, mPaint);
+            }
+// conditional to finish animation.
+            if (mPulseN > 0)
+            {
+            	--mPulseN;
+            }
+            
+            if (mTouchX >=0 && mTouchY >= 0) {         
+            	if(mPulseN <= 0)
+            		mPulseN = numberOfRings;
+            }
+        	
 
         }//pulse
 
@@ -659,8 +671,6 @@ public class TargetLiveWallpaper extends WallpaperService {
             }
 
         	//flare list:   now incorporating move old flare/virs
-            
-        	if (flareList.size() > 0) {
         		FlareData thisFlare;
 				for (Iterator<FlareData> fIterator = flareList.iterator(); fIterator.hasNext();) 
 				{
@@ -711,21 +721,13 @@ public class TargetLiveWallpaper extends WallpaperService {
 									mPaint);
 						}else
 						{
-
 							//expiring:   ... not working yet
 							fIterator.remove();
-//								flareList.removeAll(thisFlare);
-//							if(flareList.contains(thisFlare))
-//							{
-//								flareList.remove(thisFlare);
-//							}
 						}
 
 					}//else
 				}//for
-			}
 
-            
         }//flare
         
         void drawStaticTarget(Canvas c) {

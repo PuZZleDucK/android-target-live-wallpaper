@@ -27,6 +27,9 @@
 </PreferenceCategory><PreferenceCategory android:key="target_animated_category" android:title="@string/target_settings_animated_title" android:summary="@string/target_settings_3d_summary"><CheckBoxPreference android:summary="@string/target_settings_disc_summary" android:key="target_disc_on" android:title="@string/target_settings_disc_title" android:summaryOff="@string/target_settings_disc_off_summary" android:summaryOn="@string/target_settings_disc_on_summary" android:defaultValue="true"></CheckBoxPreference>
 <ListPreference android:entries="@array/target_animatenames" android:entryValues="@array/target_animatevalues" android:key="target_disc_type" android:title="@string/target_settings_disctype_title" android:summary="@string/target_settings_disctype_summary"></ListPreference>
 </PreferenceCategory>
+<PreferenceCategory android:key="target_flare_category" android:summary="@string/target_settings_flare_summary" android:title="@string/target_settings_flare_title">
+    <CheckBoxPreference android:summaryOn="@string/target_settings_flare_on_summary" android:summaryOff="@string/target_settings_flare_off_summary" android:key="target_flare_on" android:title="@string/target_settings_flare_title" android:summary="@string/target_settings_flare_summary" android:defaultValue="true"></CheckBoxPreference>
+</PreferenceCategory>
     
     
     

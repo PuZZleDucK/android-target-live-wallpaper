@@ -54,6 +54,10 @@
     
     
     <string name="target_settings_dpulse_summary">!!!Shuould I pulsate colors</string>
+    <string name="target_settings_flare_title">Flare settings</string>
+    <string name="target_settings_flare_summary">add after flare to touch</string>
+    <string name="target_settings_flare_on_summary">Flares on</string>
+    <string name="target_settings_flare_off_summary">Flares off</string>
     
     
 </resources>
