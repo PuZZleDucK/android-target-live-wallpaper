@@ -322,27 +322,27 @@ public class TargetLiveWallpaper extends WallpaperService {
                   }
                   if(discOn)
                   {
-                      drawTouchDisc(c);
+//                      drawTouchDisc(c);
                   }   
                   
                     if(topOn)
                     {
-                    	drawTopTarget(c);
+//                    	drawTopTarget(c);
                     }
                     if(leftOn)
                     {
-                    	drawLeftTarget(c);
+//                    	drawLeftTarget(c);
                     }
 
                     if(quadOn)
                     {
-                    	drawQuadTarget(c);	
+//                    	drawQuadTarget(c);	
                     }
                    
 
                     if(mouseOn)
                     {
-                    	drawStaticTarget(c);	
+//                    	drawStaticTarget(c);	
                     }
                 	
                     
@@ -614,6 +614,7 @@ public class TargetLiveWallpaper extends WallpaperService {
 
         private float[] flareX = new float[11];
         private float[] flareY = new float[11];
+        private float[] flareTime = new float[11];
         private int flareCount = 0;
         
         void drawTouchPointPulse(Canvas c) {
@@ -643,8 +644,15 @@ public class TargetLiveWallpaper extends WallpaperService {
         	{
         		
 //        		flareX[flareI] = flareX[flareI] + 20;
-        		flareY[flareI] =  (float) (flareY[flareI] + Math.sin( SystemClock.elapsedRealtime()  )-1.01);
-
+        		flareY[flareI] =  (float) (flareY[flareI] +  Math.sin( SystemClock.elapsedRealtime()  )-1.01 * flareTime[flareI]);
+        		flareTime[flareI]++;
+        		if(flareTime[flareCount] % 10 == 0)
+        		{
+        			
+        		}else
+        		{
+        			
+        		}
         	}
 
         	
@@ -656,6 +664,7 @@ public class TargetLiveWallpaper extends WallpaperService {
             	{
             		flareX[flareCount] = mTouchX;
             		flareY[flareCount] = mTouchY;
+            		flareTime[flareCount] = 0;
             		flareCount++;
             	}else
             	{//wipe
@@ -666,9 +675,16 @@ public class TargetLiveWallpaper extends WallpaperService {
 //render flares            
         	for( int flareI = 0; flareI < flareCount; flareI++)
         	{
-        	
+
+//        		c.drawCircle(flareX[flareI], flareY[flareI], 3, mPaint);
         		mPaint.setColor(0xFF00FF00);
-        		c.drawCircle(flareX[flareI], flareY[flareI], 10, mPaint);
+        		if(flareTime[flareI] < 100)
+        		{
+            		c.drawCircle(flareX[flareI], flareY[flareI], 3, mPaint);
+        		}else{
+            		c.drawCircle(flareX[flareI], flareY[flareI], 1 * (flareTime[flareI]-100) , mPaint);
+        			
+        		}
                 
         	}
 
