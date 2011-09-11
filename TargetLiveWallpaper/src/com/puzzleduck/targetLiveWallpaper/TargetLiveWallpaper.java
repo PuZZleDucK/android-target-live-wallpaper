@@ -35,6 +35,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -661,13 +662,24 @@ public class TargetLiveWallpaper extends WallpaperService {
 
 
         void drawTouchPointFlare(Canvas c) {
-            Log.d(TAG, "Start Flare");
+//            Log.d(TAG, "Start Flare");
         	//add after flare...viral...crack
 //new flare 
             if (mTouchX >=0 && mTouchY >= 0) {
-            	//list imp:
-                flareList.add(new FlareData(mTouchX, mTouchY, 5, 0xFF00FF00, 0xFF0000FF, 0));
-            	
+                //max 5 flares
+            	if (flareList.size() < 5) {
+            		//1 second delay
+                	if (flareList.size() > 0 ) {
+                		if(flareList.get(flareList.size()-1).getTime() > 10)
+                		{
+                			flareList.add(new FlareData(mTouchX, mTouchY, 5, 0xFF00FF00, 0xFF0000FF, 0));
+                		}
+                	}else
+                	{
+		                flareList.add(new FlareData(mTouchX, mTouchY, 5, 0xFF00FF00, 0xFF0000FF, 0));
+                		
+                	}
+                }
             }
 
         	//flare list:   now incorporating move old flare/virs
@@ -677,27 +689,33 @@ public class TargetLiveWallpaper extends WallpaperService {
 					thisFlare = fIterator.next();
 
 					//move  old flare/virs
-					if (thisFlare.getTime() < thisFlare.getTriggerTime()) 
+					if (thisFlare.getTime() < thisFlare.getStage1Time()) 
 					{
 						thisFlare.setY((float) (thisFlare.getY()
 								+ Math.sin(SystemClock.elapsedRealtime()) - 0.1 * thisFlare.getTime()));
 						thisFlare.setX(thisFlare.getX()
 								+ (float) Math.sin(SystemClock
 										.elapsedRealtime()));
-					} else {
-					}
-					if (thisFlare.getTime() > thisFlare.getTriggerTime()*3) 
-					{
-						//
-					}
+					} 
+//					else {
+//					}
+//						if (thisFlare.getTime() > thisFlare.getStage1Time()*3) 
+//						{
+//							//
+//						}
 					thisFlare.setTime(thisFlare.getTime() + 1);
 
 					//render
-					if (thisFlare.getTime() < thisFlare.getTriggerTime()) {
+					if (thisFlare.getTime() < thisFlare.getStage1Time()) {
+						//stage 1
+//			            Log.d(TAG, "S1");
 						mPaint.setColor(0xFF00FF00);
-						c.drawCircle(thisFlare.getX(), thisFlare.getY(), 3, mPaint);
+//						c.drawCircle(thisFlare.getX(), thisFlare.getY(), 3, mPaint);
+						c.drawRoundRect(new RectF(thisFlare.getX(), thisFlare.getY(), thisFlare.getX()+3, thisFlare.getY()+9), 0, 0, mPaint);
 					} else {
-						if (thisFlare.getTime() < thisFlare.getTriggerTime() * 2) {
+						if (thisFlare.getTime() < thisFlare.getStage1Time() + thisFlare.getStage2Time()) {
+							//stage 2
+//				            Log.d(TAG, "S2");
 							mPaint.setColor(0xFF0000FF);
 							c.drawCircle(
 									thisFlare.getX() - 10,
@@ -721,8 +739,102 @@ public class TargetLiveWallpaper extends WallpaperService {
 									mPaint);
 						}else
 						{
-							//expiring:   ... not working yet
-							fIterator.remove();
+							if(thisFlare.getTime() < thisFlare.getStage1Time() + thisFlare.getStage2Time() + thisFlare.getStage3Time())
+							{
+								//stage 3
+//					            Log.d(TAG, "S3");
+								mPaint.setColor(0xFFFF0000);
+								c.drawCircle(
+										thisFlare.getX() - 10-5,
+										thisFlare.getY() - 10-5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() - 10-5,
+										thisFlare.getY() - 10+5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() - 10+5,
+										thisFlare.getY() - 10-5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() - 10+5,
+										thisFlare.getY() - 10+5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								
+								c.drawCircle(
+										thisFlare.getX() - 10-5,
+										thisFlare.getY() + 10-5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() - 10-5,
+										thisFlare.getY() + 10+5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() - 10+5,
+										thisFlare.getY() + 10-5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() - 10+5,
+										thisFlare.getY() + 10+5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								
+								c.drawCircle(
+										thisFlare.getX() + 10-5,
+										thisFlare.getY() - 10-5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() + 10-5,
+										thisFlare.getY() - 10+5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() + 10+5,
+										thisFlare.getY() - 10-5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() + 10+5,
+										thisFlare.getY() - 10+5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								
+								c.drawCircle(
+										thisFlare.getX() + 10-5,
+										thisFlare.getY() + 10-5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() + 10-5,
+										thisFlare.getY() + 10+5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() + 10+5,
+										thisFlare.getY() + 10-5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								c.drawCircle(
+										thisFlare.getX() + 10+5,
+										thisFlare.getY() + 10+5,
+										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+										mPaint);
+								
+								
+							}else
+							{
+								//expiring:   ... working :)
+								fIterator.remove();
+								
+							}
 						}
 
 					}//else
