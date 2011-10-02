@@ -58,6 +58,7 @@
     <string name="target_settings_flare_summary">add after flare to touch</string>
     <string name="target_settings_flare_on_summary">Flares on</string>
     <string name="target_settings_flare_off_summary">Flares off</string>
+    <string name="searchText">&quot;Lets see what a search for \&quot;Target Live Wallpaper\&quot; shows up:&quot;</string>
     
     
 </resources>

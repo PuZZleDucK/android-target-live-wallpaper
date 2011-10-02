@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;

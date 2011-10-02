@@ -1,0 +1,14 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="fill_parent" android:orientation="vertical" android:id="@+id/linearLayout1" android:layout_width="fill_parent">
+        <TextView android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:id="@+id/textView1" android:text="@string/target_wallpaper_service_label"></TextView>
+        <Button android:text="Button" android:id="@+id/button1" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/searchText" android:id="@+id/textView2"></TextView>
+        
+        <android.webkit.WebView 
+        	android:layout_width="fill_parent"
+        	android:layout_height="146dp" 
+        	android:id="@+id/webView1">
+        </android.webkit.WebView>
+        
+        <TextView android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:text="TextView" android:id="@+id/textView3"></TextView>
+    </LinearLayout>
