@@ -7,12 +7,16 @@ package com.puzzleduck.targetLiveWallpaper;
 import java.net.URL;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.TableRow;
 
 
@@ -34,7 +38,6 @@ public class TargetLiveActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	
 //		this.getApplicationContext().setWallpaper(data)
@@ -42,9 +45,43 @@ public class TargetLiveActivity extends Activity {
 	
 		this.setContentView(R.layout.activity);
 
-		WebView thisWebView = (WebView)findViewById(R.id.webView1);
-		thisWebView.getSettings().setJavaScriptEnabled(true);
-	    thisWebView.loadUrl("www.google.com.au/search?q=%22target+live+wallpaper%22+%22puzzleduck+Industries%22");
+//		Button b = (Button) findViewById(R.id.button1);
+
+
+		
+		
+        final Button button = (Button) findViewById(R.id.button1);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+            	
+
+
+                SharedPreferences mPrefs;
+//                mPrefs = this.getSharedPreferences(SHARED_PREFS_NAME, 0);
+                mPrefs = TargetLiveActivity.this.getSharedPreferences(SHARED_PREFS_NAME, 0);
+                
+//                mPrefs.registerOnSharedPreferenceChangeListener(this);
+//                onSharedPreferenceChanged(mPrefs, null);
+                SharedPreferences.Editor tempEd = mPrefs.edit();
+                tempEd.putBoolean("target_quad_on", true);
+                tempEd.commit();
+
+//                mPrefs.registerOnSharedPreferenceChangeListener(listener)
+//                TargetLiveWallpaper.class.
+//                TargetLiveActivity.this.getApplication().;
+                TargetLiveActivity.this.getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_WALLPAPER_CHANGED));
+                
+            }
+        });
+
+        
+
+		
+		
+//		WebView thisWebView = (WebView)findViewById(R.id.webView1);
+//		thisWebView.getSettings().setJavaScriptEnabled(true);
+//	    thisWebView.loadUrl("www.google.com.au/search?q=%22target+live+wallpaper%22+%22puzzleduck+Industries%22");
 //		thisWebView.reload();
 		
 	}//onCreate
@@ -85,10 +122,10 @@ public class TargetLiveActivity extends Activity {
 
 //		this.setContentView(R.layout.activity);
 
-		WebView thisWebView = (WebView)findViewById(R.id.webView1);
-//		thisWebView.reload();		
-	    thisWebView.loadUrl("www.google.com.au/search?q=%22target+live+wallpaper%22+%22puzzleduck+Industries%22");
-		
+//		WebView thisWebView = (WebView)findViewById(R.id.webView1);
+////		thisWebView.reload();		
+//	    thisWebView.loadUrl("www.google.com.au/search?q=%22target+live+wallpaper%22+%22puzzleduck+Industries%22");
+
 		
 		return super.onTouchEvent(event);
 

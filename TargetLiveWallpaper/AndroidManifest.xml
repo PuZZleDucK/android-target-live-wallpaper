@@ -18,19 +18,35 @@
 */
 -->
 <manifest
-    android:versionName="2" package="com.puzzleduck.targetLiveWallpaper" android:versionCode="2" xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-sdk android:targetSdkVersion="9" android:minSdkVersion="7"/>
+    android:versionName="2" 
+    package="com.puzzleduck.targetLiveWallpaper" 
+    android:versionCode="2" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-sdk android:targetSdkVersion="9" 
+        android:minSdkVersion="7"/>
     <uses-feature android:name="android.software.live_wallpaper" />
 
     
     
     <application
-        android:label="@string/wallpapers"
-        android:icon="@drawable/target_lwp_icon" android:debuggable="false">
+        android:label="@string/target_wallpaper_application_label"
+        android:icon="@drawable/target_lwp_icon" 
+        android:debuggable="false"
+        android:enabled="true">
    		        
+        
+        <activity android:label="@string/target_wallpaper_activity_label" 
+        	android:name=".TargetLiveActivity" 
+        	android:icon="@drawable/target_lwp_icon"
+        	 android:enabled="true"
+        	 android:exported="true"
+        	 android:process="com.puzzleduck.targetLiveWallpaper.TargetLiveActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+    
+        </activity>
 
         <service
             android:label="@string/target_wallpaper_service_label"
@@ -47,18 +63,6 @@
             android:exported="true">
         </activity>
         
-        <activity android:label="@string/wallpapers" 
-        	android:name="TargetLiveActivity" 
-        	android:icon="@drawable/target_lwp_icon"
-        	android:permission="android.permission.INTERNET">
-			<uses-permission android:name="android.permission.INTERNET" />
-            <intent-filter>
-				<uses-permission android:name="android.permission.INTERNET" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-    
-        </activity>
         
 
     </application>
