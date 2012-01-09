@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -56,21 +57,24 @@ public class TargetLiveActivity extends Activity {
                 // Perform action on click
             	
 
-
-                SharedPreferences mPrefs;
+//change prefs
+//                SharedPreferences mPrefs;
 //                mPrefs = this.getSharedPreferences(SHARED_PREFS_NAME, 0);
-                mPrefs = TargetLiveActivity.this.getSharedPreferences(SHARED_PREFS_NAME, 0);
-                
+//                mPrefs = TargetLiveActivity.this.getSharedPreferences(SHARED_PREFS_NAME, 0);
 //                mPrefs.registerOnSharedPreferenceChangeListener(this);
 //                onSharedPreferenceChanged(mPrefs, null);
-                SharedPreferences.Editor tempEd = mPrefs.edit();
-                tempEd.putBoolean("target_quad_on", true);
-                tempEd.commit();
-
+//                SharedPreferences.Editor tempEd = mPrefs.edit();
+//                tempEd.putBoolean("target_quad_on", true);
+//                tempEd.commit();
 //                mPrefs.registerOnSharedPreferenceChangeListener(listener)
 //                TargetLiveWallpaper.class.
 //                TargetLiveActivity.this.getApplication().;
-                TargetLiveActivity.this.getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_WALLPAPER_CHANGED));
+//                TargetLiveActivity.this.getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_WALLPAPER_CHANGED));
+                
+                //find pdi
+            	Intent intent = new Intent(Intent.ACTION_VIEW);
+            	intent.setData(Uri.parse("market://search?q=PuZZleDucK Industries"));
+            	startActivity(intent);
                 
             }
         });
