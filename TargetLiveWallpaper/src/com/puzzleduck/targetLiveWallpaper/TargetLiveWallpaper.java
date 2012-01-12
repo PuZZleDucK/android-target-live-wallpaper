@@ -26,6 +26,7 @@ package com.puzzleduck.targetLiveWallpaper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 
 import android.app.Activity;
@@ -670,15 +671,16 @@ public class TargetLiveWallpaper extends WallpaperService {
                 //max 5 flares
             	if (flareList.size() < 5) {
             		//1 second delay
+        			Random rng = new Random();
                 	if (flareList.size() > 0 ) {
                 		if(flareList.get(flareList.size()-1).getTime() > 10)
                 		{
-                			flareList.add(new FlareData(mTouchX, mTouchY, 5, 0xFF00FF00, 0xFF0000FF, 0));
+                			flareList.add(new FlareData(mTouchX, mTouchY, rng.nextInt(20)-10, 0xFF00FF00, 0xFFFF0000, 0, 30 + rng.nextInt(20), 10 + rng.nextInt(10), 10+rng.nextInt(20)));
                 		}
                 	}else
                 	{
-		                flareList.add(new FlareData(mTouchX, mTouchY, 5, 0xFF00FF00, 0xFF0000FF, 0));
-                		
+                		flareList.add(new FlareData(mTouchX, mTouchY, rng.nextInt(20)-10, 0xFF00FF00, 0xFFFF0000, 0, 30 + rng.nextInt(20), 10 + rng.nextInt(10), 10+rng.nextInt(20)));
+                			
                 	}
                 }
             }
@@ -693,10 +695,9 @@ public class TargetLiveWallpaper extends WallpaperService {
 					if (thisFlare.getTime() < thisFlare.getStage1Time()) 
 					{
 						thisFlare.setY((float) (thisFlare.getY()
-								+ Math.sin(SystemClock.elapsedRealtime()) - 0.1 * thisFlare.getTime()));
-						thisFlare.setX(thisFlare.getX()
-								+ (float) Math.sin(SystemClock
-										.elapsedRealtime()));
+								+ Math.sin(SystemClock.elapsedRealtime()) - 0.2 * thisFlare.getTime() ));
+						thisFlare.setX((float) thisFlare.getX()
+								+ (float) Math.sin(SystemClock.elapsedRealtime()) + (( thisFlare.getTilt() * thisFlare.getTime())/80)  );
 					} 
 //					else {
 //					}
@@ -704,39 +705,41 @@ public class TargetLiveWallpaper extends WallpaperService {
 //						{
 //							//
 //						}
+						
 					thisFlare.setTime(thisFlare.getTime() + 1);
 
 					//render
 					if (thisFlare.getTime() < thisFlare.getStage1Time()) {
 						//stage 1
 //			            Log.d(TAG, "S1");
-						mPaint.setColor(0xFF00FF00);
+//						mPaint.setColor(0xFF00FF00);
+						mPaint.setColor(0xFFDDDD00);
 //						c.drawCircle(thisFlare.getX(), thisFlare.getY(), 3, mPaint);
 						c.drawRoundRect(new RectF(thisFlare.getX(), thisFlare.getY(), thisFlare.getX()+3, thisFlare.getY()+9), 0, 0, mPaint);
 					} else {
 						if (thisFlare.getTime() < thisFlare.getStage1Time() + thisFlare.getStage2Time()) {
 							//stage 2
 //				            Log.d(TAG, "S2");
-							mPaint.setColor(0xFF0000FF);
+							mPaint.setColor(thisFlare.getColor1());
 							c.drawCircle(
 									thisFlare.getX() - 10,
 									thisFlare.getY() - 10,
-									1 * (thisFlare.getTime() - thisFlare.getTriggerTime()),
+									1 * (thisFlare.getTime() - thisFlare.getStage1Time()),
 									mPaint);
 							c.drawCircle(
 									thisFlare.getX() - 10,
 									thisFlare.getY() + 10,
-									1 * (thisFlare.getTime() - thisFlare.getTriggerTime()),
+									1 * (thisFlare.getTime() - thisFlare.getStage1Time()),
 									mPaint);
 							c.drawCircle(
 									thisFlare.getX() + 10,
 									thisFlare.getY() - 10,
-									1 * (thisFlare.getTime() - thisFlare.getTriggerTime()),
+									1 * (thisFlare.getTime() - thisFlare.getStage1Time()),
 									mPaint);
 							c.drawCircle(
 									thisFlare.getX() + 10,
 									thisFlare.getY() + 10,
-									1 * (thisFlare.getTime() - thisFlare.getTriggerTime()),
+									1 * (thisFlare.getTime() - thisFlare.getStage1Time()),
 									mPaint);
 						}else
 						{
@@ -744,7 +747,7 @@ public class TargetLiveWallpaper extends WallpaperService {
 							{
 								//stage 3
 //					            Log.d(TAG, "S3");
-								mPaint.setColor(0xFFFF0000);
+								mPaint.setColor(thisFlare.getColor2());
 								c.drawCircle(
 										thisFlare.getX() - 10-5,
 										thisFlare.getY() - 10-5,

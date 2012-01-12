@@ -61,6 +61,7 @@
     <string name="searchText">&quot;Lets see what a search for \&quot;Target Live Wallpaper\&quot; shows up:&quot;</string>
     <string name="target_wallpaper_application_label">App Label - TLP</string>
     <string name="target_wallpaper_activity_label">Activity - TLP</string>
+    <string name="activity_other_apps">Other Apps byt PDi</string>
     
     
 </resources>

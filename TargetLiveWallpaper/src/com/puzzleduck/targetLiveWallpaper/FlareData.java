@@ -27,16 +27,16 @@ public class FlareData {
 		type = 0;
 	}
 	
-	public FlareData(float inx, float iny, float intilt, int incolor1, int incolor2, int intype)
+	public FlareData(float inx, float iny, float inTilt, int incolor1, int incolor2, int intype, int stage1, int stage2, int stage3)
 	{
 		x = inx;
 		y = iny;
 		time = 0;
 		triggerTime = 50;
-		setStage1Time(50);
-		setStage2Time(20);
-		setStage3Time(20);
-		tilt = intilt;
+		setStage1Time(stage1);
+		setStage2Time(stage2);
+		setStage3Time(stage3);
+		tilt = inTilt;
 		color1 = incolor1;
 		color2 = incolor2;
 		type = intype;
