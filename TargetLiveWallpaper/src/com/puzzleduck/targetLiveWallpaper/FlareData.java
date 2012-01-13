@@ -12,6 +12,8 @@ public class FlareData {
 	private int color1;
 	private int color2;
 	private int type;
+	private int explosionRadius;
+	private int explosionCount;
 
 	public FlareData() {
 		x = 100;
@@ -25,6 +27,8 @@ public class FlareData {
 		color1 = 0xFF00FF00;
 		color2 = 0xFF0000FF;
 		type = 0;
+		explosionRadius = 0;
+		explosionCount = 0;
 	}
 	
 	public FlareData(float inx, float iny, float inTilt, int incolor1, int incolor2, int intype, int stage1, int stage2, int stage3)
@@ -40,6 +44,8 @@ public class FlareData {
 		color1 = incolor1;
 		color2 = incolor2;
 		type = intype;
+		explosionRadius = 0;
+		explosionCount = 0;
 	}
 
 	public float getX() {
@@ -128,5 +134,24 @@ public class FlareData {
 
 	public float getStage3Time() {
 		return stage3Time;
+	}
+
+	public void setExplosionRadius(int explosionRadius) {
+		this.explosionRadius = explosionRadius;
+	}
+	public void incrementExplosionRadius() {
+		this.explosionRadius ++;
+	}
+
+	public int getExplosionRadius() {
+		return explosionRadius;
+	}
+
+	public void setExplosionCount(int explosionCount) {
+		this.explosionCount = explosionCount;
+	}
+
+	public int getExplosionCount() {
+		return explosionCount;
 	}
 }
