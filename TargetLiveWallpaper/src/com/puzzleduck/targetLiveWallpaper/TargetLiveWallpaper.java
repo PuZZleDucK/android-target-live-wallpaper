@@ -724,14 +724,18 @@ public class TargetLiveWallpaper extends WallpaperService {
 							
 							if(thisFlare.getExplosionCount() == 0) //new explosion
 							{
-								thisFlare.setExplosionCount(4 + rng.nextInt(16));
+								thisFlare.setExplosionCount(4 + rng.nextInt(20) );
 								Log.d(TAG, "\n\nFlare count: " + thisFlare.getExplosionCount());
 
 								for(int i = thisFlare.getExplosionCount(); i > 0; i--)
 								{	
 									Log.d(TAG, "   -flare" + i +": " + thisFlare.getExplosionCount());
-									Log.d(TAG, "        i/count -" + (double)i/(double)thisFlare.getExplosionCount() );
-									Log.d(TAG, "        i/count*360 -" + (double)(i/thisFlare.getExplosionCount())*360.0 );
+									Log.d(TAG, "        i/count " + (double)i/(double)thisFlare.getExplosionCount() );
+									Log.d(TAG, "        i/count*360 " + (double)((double)i/(double)thisFlare.getExplosionCount())*360.0 );
+									Log.d(TAG, "        sin i/count*360 " + (float)Math.sin((double)((double)i/(double)thisFlare.getExplosionCount())*360.0));
+									Log.d(TAG, "        cos i/count*360 " + (float)Math.cos((double)((double)i/(double)thisFlare.getExplosionCount())*360.0));
+									Log.d(TAG, "        rad sin i/count*360 " + (float)((double)thisFlare.getExplosionRadius()+20) * Math.sin((double)((double)i/(double)thisFlare.getExplosionCount())*359.0));
+									Log.d(TAG, "        rad cos i/count*360 " + (float)((double)thisFlare.getExplosionRadius()+20) * Math.cos((double)((double)i/(double)thisFlare.getExplosionCount())*359.0));
 									
 								}
 							}
@@ -742,8 +746,8 @@ public class TargetLiveWallpaper extends WallpaperService {
 							for(int i = thisFlare.getExplosionCount(); i > 0; i--)
 							{
 								c.drawCircle(
-										(float)(thisFlare.getExplosionRadius() * (Math.cos((double)((double)i/(double)thisFlare.getExplosionCount())*360.0)) + thisFlare.getX()),
-										(float)(thisFlare.getExplosionRadius() * (Math.sin((double)((double)i/(double)thisFlare.getExplosionCount())*360.0)) + thisFlare.getY()),
+										(float)((double)thisFlare.getExplosionRadius() * (Math.sin((double)((double)i/(double)thisFlare.getExplosionCount())*0.017453293*360)) + thisFlare.getX()),
+										(float)((double)thisFlare.getExplosionRadius() * (Math.cos((double)((double)i/(double)thisFlare.getExplosionCount())*0.017453293*360)) + thisFlare.getY()),
 										2,
 										mPaint);
 //								c.drawCircle(
