@@ -50,7 +50,8 @@
 
         <service
             android:label="@string/target_wallpaper_service_label"
-            android:permission="android.permission.BIND_WALLPAPER" android:name="TargetLiveWallpaper">
+            android:permission="android.permission.BIND_WALLPAPER"
+            android:name="TargetLiveWallpaper">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
             </intent-filter>

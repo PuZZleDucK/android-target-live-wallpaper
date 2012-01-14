@@ -7,11 +7,15 @@ package com.puzzleduck.targetLiveWallpaper;
 import java.net.URL;
 
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.service.wallpaper.WallpaperService;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -76,6 +80,59 @@ public class TargetLiveActivity extends Activity {
             	intent.setData(Uri.parse("market://search?q=PuZZleDucK Industries"));
             	startActivity(intent);
                 
+            }
+        });
+
+        
+        final Button selectButton = (Button) findViewById(R.id.lwpSelectButton);
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+            	
+
+//launch chooser      
+                Intent intent = new Intent();
+                intent.setAction(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER);
+            	startActivity(intent);
+                
+            }
+        });
+
+        
+        
+        final Button defaultButton = (Button) findViewById(R.id.defaultSettingsButton);
+        defaultButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+            	
+				Log.d(TAG, "\n\n    BUTTON PRESS"  );
+
+//change prefs
+                SharedPreferences mPrefs;
+////                mPrefs = this.getSharedPreferences(SHARED_PREFS_NAME, 0);
+                mPrefs = TargetLiveActivity.this.getSharedPreferences(SHARED_PREFS_NAME, 0);
+//                mPrefs.registerOnSharedPreferenceChangeListener((OnSharedPreferenceChangeListener) TargetLiveActivity.this);
+//                onSharedPreferenceChanged(mPrefs, null);
+                SharedPreferences.Editor tempEd = mPrefs.edit();
+                tempEd.putBoolean("target_quad_on", true);
+                tempEd.commit();
+                
+//                mPrefs.registerOnSharedPreferenceChangeListener(TargetLiveWallpaper.TargetEngine.class.newInstance());
+//                mPrefs.registerOnSharedPreferenceChangeListener(listener)
+//                TargetLiveWallpaper.class.
+//                TargetLiveActivity.this.getApplication().;
+                TargetLiveActivity.this.getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_WALLPAPER_CHANGED));
+                
+//                WallpaperManager wm = WallpaperManager.getInstance(TargetLiveActivity.this);
+//                wm.setBitmap(bitmap)
+                
+//                WallpaperService ws = (WallpaperService)TargetLiveWallpaper;
+                
+                
+                Intent intent = new Intent();
+                intent.setAction(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER);
+            	startActivityForResult(intent, 5555);
+            	finishActivity(5555);
             }
         });
 

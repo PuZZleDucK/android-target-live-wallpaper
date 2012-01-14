@@ -11,4 +11,6 @@
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/searchText" android:id="@+id/textView2"></TextView>
         
         <TextView android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_height="wrap_content" android:text="TextView" android:id="@+id/textView3"></TextView>
+        <Button android:id="@+id/defaultSettingsButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/activity_button_defaults"></Button>
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/activity_button_choose" android:id="@+id/lwpSelectButton"></Button>
     </LinearLayout>

@@ -62,6 +62,8 @@
     <string name="target_wallpaper_application_label">App Label - TLP</string>
     <string name="target_wallpaper_activity_label">Activity - TLP</string>
     <string name="activity_other_apps">Other Apps byt PDi</string>
+    <string name="activity_button_defaults">Restore Default Settings</string>
+    <string name="activity_button_choose">Select live wallpapers</string>
     
     
 </resources>

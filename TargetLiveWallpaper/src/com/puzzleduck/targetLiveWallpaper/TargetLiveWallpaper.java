@@ -31,6 +31,7 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -51,7 +52,15 @@ import android.view.SurfaceHolder;
 
 //This animated wallpaper draws many user selectable items... target, trackers, cursor, etc
 public class TargetLiveWallpaper extends WallpaperService {
-    public static final String SHARED_PREFS_NAME="target_lwp_settings";
+    @Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		// TODO Auto-generated method stub
+		super.onConfigurationChanged(newConfig);
+		this.onCreate();
+	}
+
+
+	public static final String SHARED_PREFS_NAME="target_lwp_settings";
 
 
     private static final String TAG = "TargetLiveWallpaper";
@@ -85,9 +94,11 @@ public class TargetLiveWallpaper extends WallpaperService {
         return new TargetEngine();
     }
 
+    
     class TargetEngine extends Engine 
         implements SharedPreferences.OnSharedPreferenceChangeListener {
- 
+
+
         private static final int MAX_FLARE_COUNT = 3;
 
 		private final Handler mHandler = new Handler();
@@ -141,7 +152,8 @@ public class TargetLiveWallpaper extends WallpaperService {
         };
         private boolean mVisible;
         private SharedPreferences mPrefs;
-
+        public SharedPreferences.OnSharedPreferenceChangeListener listener;
+        
         TargetEngine() {
             // Create a Paint to draw the lines for our 3D shape
             final Paint paint = mPaint;
@@ -152,6 +164,10 @@ public class TargetLiveWallpaper extends WallpaperService {
             paint.setStyle(Paint.Style.STROKE); 
             
             mPrefs = TargetLiveWallpaper.this.getSharedPreferences(SHARED_PREFS_NAME, 0);
+            
+            listener = (SharedPreferences.OnSharedPreferenceChangeListener)this;
+
+            
             mPrefs.registerOnSharedPreferenceChangeListener(this);
             onSharedPreferenceChanged(mPrefs, null);
         }
@@ -189,6 +205,19 @@ public class TargetLiveWallpaper extends WallpaperService {
             myResources = getBaseContext().getResources();
             mCursorImage = BitmapFactory.decodeResource(myResources, getResources().getIdentifier( getPackageName() + ":drawable/"+cursor, null, null));
 
+            //restart engine here
+            TargetLiveWallpaper.this.onDestroy();
+            TargetLiveWallpaper.this.onCreate();
+            TargetLiveWallpaper.TargetEngine.this.onDestroy();
+            TargetLiveWallpaper.TargetEngine.this.onCreate(getSurfaceHolder());
+//            TargetLiveWallpaper.TargetEngine.this.onSurfaceChanged(getSurfaceHolder(), 0, 0, 0);
+            drawFrame();
+            
+            onDestroy();
+            onCreate(getSurfaceHolder());
+            
+            
+            
         }
 
         private void readModel(String prefix) {
@@ -823,90 +852,6 @@ public class TargetLiveWallpaper extends WallpaperService {
 
 								
 								
-//								c.drawCircle(
-//										thisFlare.getX() - 10-5,
-//										thisFlare.getY() - 10-5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() - 10-5,
-//										thisFlare.getY() - 10+5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() - 10+5,
-//										thisFlare.getY() - 10-5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() - 10+5,
-//										thisFlare.getY() - 10+5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								
-//								c.drawCircle(
-//										thisFlare.getX() - 10-5,
-//										thisFlare.getY() + 10-5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() - 10-5,
-//										thisFlare.getY() + 10+5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() - 10+5,
-//										thisFlare.getY() + 10-5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() - 10+5,
-//										thisFlare.getY() + 10+5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								
-//								c.drawCircle(
-//										thisFlare.getX() + 10-5,
-//										thisFlare.getY() - 10-5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() + 10-5,
-//										thisFlare.getY() - 10+5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() + 10+5,
-//										thisFlare.getY() - 10-5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() + 10+5,
-//										thisFlare.getY() - 10+5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								
-//								c.drawCircle(
-//										thisFlare.getX() + 10-5,
-//										thisFlare.getY() + 10-5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() + 10-5,
-//										thisFlare.getY() + 10+5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() + 10+5,
-//										thisFlare.getY() + 10-5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-//								c.drawCircle(
-//										thisFlare.getX() + 10+5,
-//										thisFlare.getY() + 10+5,
-//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-//										mPaint);
-								
 								
 							}else
 							{
@@ -1012,6 +957,14 @@ public class TargetLiveWallpaper extends WallpaperService {
         }
         
     }
+
+//	public static void changeSettings() {
+//		if(SHARED_PREFS_NAME != null)
+//		{
+//			WallpaperService ws = (WallpaperService)TargetLiveWallpaper;
+//		}
+//		
+//	}
     
     
     
