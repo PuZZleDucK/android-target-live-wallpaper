@@ -88,7 +88,9 @@ public class TargetLiveWallpaper extends WallpaperService {
     class TargetEngine extends Engine 
         implements SharedPreferences.OnSharedPreferenceChangeListener {
  
-        private final Handler mHandler = new Handler();
+        private static final int MAX_FLARE_COUNT = 3;
+
+		private final Handler mHandler = new Handler();
 
         ThreeDPoint [] mOriginalPoints;
         ThreeDPoint [] mRotatedPoints;
@@ -671,16 +673,16 @@ public class TargetLiveWallpaper extends WallpaperService {
 //new flare 
             if (mTouchX >=0 && mTouchY >= 0) {
                 //max 5 flares
-            	if (flareList.size() < 5) {
+            	if (flareList.size() < MAX_FLARE_COUNT) {
             		//1 second delay
                 	if (flareList.size() > 0 ) {
                 		if(flareList.get(flareList.size()-1).getTime() > 10)
                 		{
-                			flareList.add(new FlareData(mTouchX, mTouchY, rng.nextInt(20)-10, 0xFF00FF00, 0xFFFF0000, 0, 30 + rng.nextInt(20), 20 + rng.nextInt(10), 10+rng.nextInt(20)));
+                			flareList.add(new FlareData(mTouchX, mTouchY, rng.nextInt(10)-5, 0xDD00FF00, 0xDDFF0000, 0, 30 + rng.nextInt(20), 15 + rng.nextInt(10), 30+rng.nextInt(20)));
                 		}
                 	}else
                 	{
-                		flareList.add(new FlareData(mTouchX, mTouchY, rng.nextInt(20)-10, 0xFF00FF00, 0xFFFF0000, 0, 30 + rng.nextInt(20), 20 + rng.nextInt(10), 10+rng.nextInt(20)));
+                		flareList.add(new FlareData(mTouchX, mTouchY, rng.nextInt(10)-5, 0xDD0000FF, 0xDDFF0000, 0, 30 + rng.nextInt(20), 15 + rng.nextInt(10), 30+rng.nextInt(20)));
                 			
                 	}
                 }
@@ -714,9 +716,9 @@ public class TargetLiveWallpaper extends WallpaperService {
 						//stage 1
 //			            Log.d(TAG, "S1");
 //						mPaint.setColor(0xFF00FF00);
-						mPaint.setColor(0xFFDDDD00);
+						mPaint.setColor(0xCCDDDD00);
 //						c.drawCircle(thisFlare.getX(), thisFlare.getY(), 3, mPaint);
-						c.drawRoundRect(new RectF(thisFlare.getX(), thisFlare.getY(), thisFlare.getX()+3, thisFlare.getY()+9), 0, 0, mPaint);
+						c.drawRoundRect(new RectF(thisFlare.getX(), thisFlare.getY(), thisFlare.getX()+1, thisFlare.getY()+5), 0, 0, mPaint);
 					} else {
 						if (thisFlare.getTime() < thisFlare.getStage1Time() + thisFlare.getStage2Time()) {
 							//stage 2
@@ -724,31 +726,39 @@ public class TargetLiveWallpaper extends WallpaperService {
 							
 							if(thisFlare.getExplosionCount() == 0) //new explosion
 							{
-								thisFlare.setExplosionCount(4 + rng.nextInt(20) );
-								Log.d(TAG, "\n\nFlare count: " + thisFlare.getExplosionCount());
+								thisFlare.setExplosionCount(6 + rng.nextInt(20) );
+//								Log.d(TAG, "\n\nFlare count: " + thisFlare.getExplosionCount());
 
-								for(int i = thisFlare.getExplosionCount(); i > 0; i--)
-								{	
-									Log.d(TAG, "   -flare" + i +": " + thisFlare.getExplosionCount());
-									Log.d(TAG, "        i/count " + (double)i/(double)thisFlare.getExplosionCount() );
-									Log.d(TAG, "        i/count*360 " + (double)((double)i/(double)thisFlare.getExplosionCount())*360.0 );
-									Log.d(TAG, "        sin i/count*360 " + (float)Math.sin((double)((double)i/(double)thisFlare.getExplosionCount())*360.0));
-									Log.d(TAG, "        cos i/count*360 " + (float)Math.cos((double)((double)i/(double)thisFlare.getExplosionCount())*360.0));
-									Log.d(TAG, "        rad sin i/count*360 " + (float)((double)thisFlare.getExplosionRadius()+20) * Math.sin((double)((double)i/(double)thisFlare.getExplosionCount())*359.0));
-									Log.d(TAG, "        rad cos i/count*360 " + (float)((double)thisFlare.getExplosionRadius()+20) * Math.cos((double)((double)i/(double)thisFlare.getExplosionCount())*359.0));
-									
-								}
+//								for(int i = thisFlare.getExplosionCount(); i > 0; i--)
+//								{	
+//									Log.d(TAG, "   -flare" + i +": " + thisFlare.getExplosionCount());
+//									Log.d(TAG, "        i/count " + (double)i/(double)thisFlare.getExplosionCount() );
+//									Log.d(TAG, "        i/count*360 " + (double)((double)i/(double)thisFlare.getExplosionCount())*360.0 );
+//									Log.d(TAG, "        rad sin i/count*360 " + (float)((double)thisFlare.getExplosionRadius()+20) * Math.sin((double)((double)i/(double)thisFlare.getExplosionCount())*359.0));
+//									Log.d(TAG, "        rad cos i/count*360 " + (float)((double)thisFlare.getExplosionRadius()+20) * Math.cos((double)((double)i/(double)thisFlare.getExplosionCount())*359.0));
+//								}
 							}
 							
 							mPaint.setColor(thisFlare.getColor1());
 							thisFlare.incrementExplosionRadius();
+							thisFlare.incrementExplosionRadius();
+							//fade colors
+							if(rng.nextInt(4) == 1)
+							{
+								thisFlare.setColor1(thisFlare.getColor1()-0x01000000);
+							}
+							//drift down
+							if(rng.nextInt(40) == 1)
+							{
+								thisFlare.setY(thisFlare.getY()+1);
+							}
 							
 							for(int i = thisFlare.getExplosionCount(); i > 0; i--)
 							{
 								c.drawCircle(
-										(float)((double)thisFlare.getExplosionRadius() * (Math.sin((double)((double)i/(double)thisFlare.getExplosionCount())*0.017453293*360)) + thisFlare.getX()),
-										(float)((double)thisFlare.getExplosionRadius() * (Math.cos((double)((double)i/(double)thisFlare.getExplosionCount())*0.017453293*360)) + thisFlare.getY()),
-										2,
+										(float)((double)thisFlare.getExplosionRadius() * (Math.sin((double)((double)i/(double)thisFlare.getExplosionCount())*0.017453293*360)) + thisFlare.getX() + rng.nextInt(2)-4),
+										(float)((double)thisFlare.getExplosionRadius() * (Math.cos((double)((double)i/(double)thisFlare.getExplosionCount())*0.017453293*360)) + thisFlare.getY() + rng.nextInt(2)-4),
+										1,
 										mPaint);
 //								c.drawCircle(
 //										(float) (thisFlare.getX() + (Math.cos( (i/thisFlare.getExplosionCount())*360 ) * thisFlare.getExplosionRadius())),
@@ -756,117 +766,146 @@ public class TargetLiveWallpaper extends WallpaperService {
 //										2,
 //										mPaint);
 							}
-							
-//							c.drawCircle(
-//									thisFlare.getX() - 10,
-//									thisFlare.getY() - 10,
-//									1 * (thisFlare.getTime() - thisFlare.getStage1Time() ),
-//									mPaint);
-//							c.drawCircle(
-//									thisFlare.getX() - 10,
-//									thisFlare.getY() + 10,
-//									1 * (thisFlare.getTime() - thisFlare.getStage1Time()),
-//									mPaint);
-//							c.drawCircle(
-//									thisFlare.getX() + 10,
-//									thisFlare.getY() - 10,
-//									1 * (thisFlare.getTime() - thisFlare.getStage1Time()),
-//									mPaint);
-//							c.drawCircle(
-//									thisFlare.getX() + 10,
-//									thisFlare.getY() + 10,
-//									1 * (thisFlare.getTime() - thisFlare.getStage1Time()),
-//									mPaint);
 						}else
 						{
 							if(thisFlare.getTime() < thisFlare.getStage1Time() + thisFlare.getStage2Time() + thisFlare.getStage3Time())
 							{
 								//stage 3
-//					            Log.d(TAG, "S3");
 								mPaint.setColor(thisFlare.getColor2());
-								c.drawCircle(
-										thisFlare.getX() - 10-5,
-										thisFlare.getY() - 10-5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() - 10-5,
-										thisFlare.getY() - 10+5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() - 10+5,
-										thisFlare.getY() - 10-5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() - 10+5,
-										thisFlare.getY() - 10+5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
+								thisFlare.incrementExplosion2Radius();
 								
-								c.drawCircle(
-										thisFlare.getX() - 10-5,
-										thisFlare.getY() + 10-5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() - 10-5,
-										thisFlare.getY() + 10+5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() - 10+5,
-										thisFlare.getY() + 10-5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() - 10+5,
-										thisFlare.getY() + 10+5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
+								if(thisFlare.getExplosion2Count() == 0) //new explosion
+								{
+									thisFlare.setExplosion2Count(4 + rng.nextInt(8) );
+	//								Log.d(TAG, "\n\nFlare2 count: " + thisFlare.getExplosionCount());
+	
+								}
+
 								
-								c.drawCircle(
-										thisFlare.getX() + 10-5,
-										thisFlare.getY() - 10-5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() + 10-5,
-										thisFlare.getY() - 10+5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() + 10+5,
-										thisFlare.getY() - 10-5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() + 10+5,
-										thisFlare.getY() - 10+5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
 								
-								c.drawCircle(
-										thisFlare.getX() + 10-5,
-										thisFlare.getY() + 10-5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() + 10-5,
-										thisFlare.getY() + 10+5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() + 10+5,
-										thisFlare.getY() + 10-5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
-								c.drawCircle(
-										thisFlare.getX() + 10+5,
-										thisFlare.getY() + 10+5,
-										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
-										mPaint);
+								for(int i = thisFlare.getExplosionCount(); i > 0; i--)
+								{
+									for(int j = thisFlare.getExplosion2Count(); j > 0; j--)
+									{
+
+										switch(rng.nextInt(5))
+										{
+											case(0):
+												mPaint.setColor(thisFlare.getColor2()-0x2200000);
+											
+											case(2):
+
+												mPaint.setColor(thisFlare.getColor2()+0x22000000);
+											break;
+											default:
+												mPaint.setColor(thisFlare.getColor2());
+												break;
+										}
+										c.drawPoint(
+												(float)( (double)thisFlare.getExplosion2Radius() * (Math.sin((double)((double)j/(double)thisFlare.getExplosion2Count())*0.017453293*360)) +     (double)thisFlare.getExplosionRadius() * (Math.sin((double)((double)i/(double)thisFlare.getExplosionCount())*0.017453293*360)) + thisFlare.getX() + rng.nextInt(2)-4),
+												(float)( (double)thisFlare.getExplosion2Radius() * (Math.cos((double)((double)j/(double)thisFlare.getExplosion2Count())*0.017453293*360)) +     (double)thisFlare.getExplosionRadius() * (Math.cos((double)((double)i/(double)thisFlare.getExplosionCount())*0.017453293*360)) + thisFlare.getY() + rng.nextInt(2)-4),
+												mPaint);
+										
+									}
+									
+									//fade colors
+									if(rng.nextInt(5) == 1)
+									{
+										thisFlare.setColor2(thisFlare.getColor2()-0x01000000);
+									}
+									
+									//drift down
+									if(rng.nextInt(40) == 1)
+									{
+										thisFlare.setY(thisFlare.getY()+1);
+									}
+								}
+
+								
+								
+//								c.drawCircle(
+//										thisFlare.getX() - 10-5,
+//										thisFlare.getY() - 10-5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() - 10-5,
+//										thisFlare.getY() - 10+5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() - 10+5,
+//										thisFlare.getY() - 10-5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() - 10+5,
+//										thisFlare.getY() - 10+5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								
+//								c.drawCircle(
+//										thisFlare.getX() - 10-5,
+//										thisFlare.getY() + 10-5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() - 10-5,
+//										thisFlare.getY() + 10+5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() - 10+5,
+//										thisFlare.getY() + 10-5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() - 10+5,
+//										thisFlare.getY() + 10+5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								
+//								c.drawCircle(
+//										thisFlare.getX() + 10-5,
+//										thisFlare.getY() - 10-5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() + 10-5,
+//										thisFlare.getY() - 10+5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() + 10+5,
+//										thisFlare.getY() - 10-5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() + 10+5,
+//										thisFlare.getY() - 10+5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								
+//								c.drawCircle(
+//										thisFlare.getX() + 10-5,
+//										thisFlare.getY() + 10-5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() + 10-5,
+//										thisFlare.getY() + 10+5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() + 10+5,
+//										thisFlare.getY() + 10-5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
+//								c.drawCircle(
+//										thisFlare.getX() + 10+5,
+//										thisFlare.getY() + 10+5,
+//										1 * (thisFlare.getTime() - (thisFlare.getStage1Time() + thisFlare.getStage2Time())),
+//										mPaint);
 								
 								
 							}else
