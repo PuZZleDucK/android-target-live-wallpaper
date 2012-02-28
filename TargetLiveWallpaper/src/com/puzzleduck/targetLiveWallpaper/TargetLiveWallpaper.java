@@ -113,7 +113,7 @@ public class TargetLiveWallpaper extends WallpaperService {
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
-        private static final int MAX_FLARE_COUNT = 3;
+        private static final int MAX_FLARE_COUNT = 1;
 
 		private final Handler mHandler = new Handler();
 
@@ -598,6 +598,11 @@ public class TargetLiveWallpaper extends WallpaperService {
                     if(flareOn)
                     {
                     	drawTouchPointFlare(c);
+                    }
+                    
+                    if(true)
+                    {
+                    	drawOrbital(c);
                     }
                 }
             } finally { 
@@ -1175,6 +1180,35 @@ public class TargetLiveWallpaper extends WallpaperService {
             c.drawBitmap(mCursorImage, mLastTouchX - (mCursorImage.getHeight()/2), mLastTouchY - (mCursorImage.getWidth()/2), mPaint);
         }
 
+        void drawOrbital(Canvas c) {
+        	float rotationSpeed = 0.001f;
+            float now = SystemClock.elapsedRealtime()*rotationSpeed;
+
+//            int orbitalCount = 3;
+//            int orbitalSeperation = 45;
+            int orbitalCount = 6;
+            float orbitalSeperation = 90f;
+
+            mPaint.setARGB(255, 0, 255, 0);
+            
+            for(int i = 0; i < orbitalCount; i++)
+            {
+                c.drawCircle( mLastTouchX + (float) ( (2+Math.cos( 3*now ) * Math.cos(2*now)) *100)-200, 
+           		     mLastTouchY + (float) ( (2+Math.cos( 3*now ) * Math.sin(2*now)) *100)-200, 
+           		     1+i, mPaint);//SystemClock.elapsedRealtime()
+                now -= orbitalSeperation ;
+            	
+            }
+//            c.drawCircle( mLastTouchX + (float) ( (2+Math.cos( 3*now ) * Math.cos(2*now)) *100)-200, 
+//       		     mLastTouchY + (float) ( (2+Math.cos( 3*now ) * Math.sin(2*now)) *100)-200, 
+//       		     5, mPaint);//SystemClock.elapsedRealtime()
+//            now -= 50;
+//            c.drawCircle( mLastTouchX + (float) ( (2+Math.cos( 3*now ) * Math.cos(2*now)) *100)-200, 
+//       		     mLastTouchY + (float) ( (2+Math.cos( 3*now ) * Math.sin(2*now)) *100)-200, 
+//       		     5, mPaint);//SystemClock.elapsedRealtime()
+    }
+        
+        
         void drawTouchDisc(Canvas c) {
         	//case: discStyle.... rgb the hard way
             int oldColor = mPaint.getColor();
