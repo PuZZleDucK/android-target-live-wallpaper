@@ -204,7 +204,9 @@ public class TargetLiveWallpaper extends WallpaperService {
             
             //rotating targets
             discOn = prefs.getBoolean("target_disc_on", true);
-            discStyle = Integer.valueOf(prefs.getString("target_disc_type", "1"));
+            discStyle = prefs.getInt("target_disc_type", 1);
+//            discStyle = Integer.valueOf(prefs.getString("target_disc_type", "1"));
+            discStyle = prefs.getInt("target_disc_type", 1);
             
             //static targets
             mouseOn = prefs.getBoolean("target_mouse_on", false);
@@ -467,7 +469,8 @@ public class TargetLiveWallpaper extends WallpaperService {
             
             //rotating targets
             discOn = prefs.getBoolean("target_disc_on", true);
-            discStyle = Integer.valueOf(prefs.getString("target_disc_type", "1"));
+//            discStyle = Integer.valueOf(prefs.getString("target_disc_type", "1"));
+            discStyle = prefs.getInt("target_disc_type", 1);
             
             //static targets
             mouseOn = prefs.getBoolean("target_mouse_on", false);
@@ -1188,9 +1191,9 @@ public class TargetLiveWallpaper extends WallpaperService {
 //            int orbitalSeperation = 45;
             int ORBIT_6_KNOT = 0;
             int ORBIT_4_KNOT = 1;
-            int orbitType = ORBIT_6_KNOT;
+            int orbitType = ORBIT_4_KNOT;  
 
-        	if(orbitType == ORBIT_6_KNOT)
+        	if(orbitType == ORBIT_6_KNOT) 
         	{
         		int orbitalCount = 9;
                 float orbitalSeperation = 90f;

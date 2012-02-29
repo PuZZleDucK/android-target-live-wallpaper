@@ -22,12 +22,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TableRow;
 
 
 
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
+import android.provider.MediaStore;
+
+
 //This is the "app" part of the LWP
-public class TargetLiveActivity extends Activity {
+public class TargetLiveActivity extends Activity implements OnSharedPreferenceChangeListener   {
     public static final String SHARED_PREFS_NAME="target_lwp_settings";
 
 
@@ -52,6 +59,16 @@ public class TargetLiveActivity extends Activity {
 
 //		Button b = (Button) findViewById(R.id.button1);
 
+//		Preference p = new Preference(this);
+//		PreferenceManager pm = p.getPreferenceManager();
+//		PreferenceManager pm = this.getPreferenceManager();
+//		getApplicationContext().startActivity();
+//		PreferenceManager pm = ((PreferenceActivity) getApplicationContext()).getPreferenceManager();
+
+		
+//		pm.setSharedPreferencesName(TargetLiveWallpaper.SHARED_PREFS_NAME);
+//		pm.setSharedPreferencesName("target_lwp_settings");
+//		pm.getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
 		
 		
@@ -137,7 +154,79 @@ public class TargetLiveActivity extends Activity {
         });
 
         
+//        presetButton1
 
+
+        final ImageButton presetButton1debian = (ImageButton) findViewById(R.id.presetButton1);
+        presetButton1debian.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+            	
+				Log.d(TAG, "\n\n   presetButton1 BUTTON PRESS"  );
+
+//change prefs
+                SharedPreferences mPrefs;
+////                mPrefs = this.getSharedPreferences(SHARED_PREFS_NAME, 0);
+                mPrefs = TargetLiveActivity.this.getSharedPreferences(SHARED_PREFS_NAME, 0);
+//                mPrefs.registerOnSharedPreferenceChangeListener((OnSharedPreferenceChangeListener) TargetLiveActivity.this);
+//                onSharedPreferenceChanged(mPrefs, null);
+                SharedPreferences.Editor tempEd = mPrefs.edit();
+//                tempEd.putBoolean("target_quad_on", true);
+                
+                tempEd.putBoolean("target_disc_on", false);
+//                tempEd.putInt("target_disc_type", 1);
+                
+                tempEd.commit();
+
+                Intent intent = new Intent(Intent.ACTION_WALLPAPER_CHANGED );
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        	    
+                startActivity(intent);
+//                TargetLiveWallpaper.class;
+//                WallpaperService.this.onCreate();
+//                TargetLiveWallpaper.Engine();
+//                WallpaperService.Engine();
+          
+            }
+        });
+		
+
+        final ImageButton prese2Button1debian = (ImageButton) findViewById(R.id.presetButton1);
+        prese2Button1debian.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+            	
+				Log.d(TAG, "\n\n   presetButton1 BUTTON PRESS"  );
+
+//change prefs
+                SharedPreferences mPrefs;
+////                mPrefs = this.getSharedPreferences(SHARED_PREFS_NAME, 0);
+                mPrefs = TargetLiveActivity.this.getSharedPreferences(SHARED_PREFS_NAME, 0);
+//                mPrefs.registerOnSharedPreferenceChangeListener((OnSharedPreferenceChangeListener) TargetLiveActivity.this);
+//                onSharedPreferenceChanged(mPrefs, null);
+                SharedPreferences.Editor tempEd = mPrefs.edit();
+//                tempEd.putBoolean("target_quad_on", true);
+                
+                tempEd.putBoolean("target_disc_on", true);
+//                tempEd.putInt("target_disc_type", 1);
+                
+                tempEd.commit();
+
+                
+                Intent intent = new Intent( );
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                Intent i = new Intent();
+                intent.setAction(Intent.ACTION_WALLPAPER_CHANGED);
+                sendBroadcast(intent);
+                
+//                startActivity(intent);
+//                TargetLiveWallpaper.class;
+//                WallpaperService.this.onCreate();
+//                TargetLiveWallpaper.Engine();
+//                WallpaperService.Engine();
+          
+            }
+        });
 		
 		
 //		WebView thisWebView = (WebView)findViewById(R.id.webView1);
@@ -199,6 +288,13 @@ public class TargetLiveActivity extends Activity {
 	public Drawable peekWallpaper() {
 		// TODO Auto-generated method stub
 		return super.peekWallpaper();
+	}
+
+
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+			String key) {
+		// TODO Auto-generated method stub
+		
 	}
 
     

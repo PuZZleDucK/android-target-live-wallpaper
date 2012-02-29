@@ -64,6 +64,7 @@
     <string name="activity_other_apps">Other Apps byt PDi</string>
     <string name="activity_button_defaults">Restore Default Settings</string>
     <string name="activity_button_choose">Select live wallpapers</string>
+    <string name="custom_setting_preset_header">Presets</string>
     
     
 </resources>
