@@ -61,7 +61,8 @@
             android:label="@string/target_settings"
             android:name="TargetLiveWallpaperSettings"
             android:theme="@android:style/Theme.Light.WallpaperSettings"
-            android:exported="true">
+            android:exported="true"
+            android:layout="@layout/activity">
         </activity>
         
         

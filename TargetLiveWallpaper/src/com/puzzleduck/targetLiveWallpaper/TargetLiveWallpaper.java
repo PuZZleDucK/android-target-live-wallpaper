@@ -1186,19 +1186,67 @@ public class TargetLiveWallpaper extends WallpaperService {
 
 //            int orbitalCount = 3;
 //            int orbitalSeperation = 45;
-            int orbitalCount = 6;
-            float orbitalSeperation = 90f;
+            int ORBIT_6_KNOT = 0;
+            int ORBIT_4_KNOT = 1;
+            int orbitType = ORBIT_6_KNOT;
 
-            mPaint.setARGB(255, 0, 255, 0);
-            
-            for(int i = 0; i < orbitalCount; i++)
-            {
-                c.drawCircle( mLastTouchX + (float) ( (2+Math.cos( 3*now ) * Math.cos(2*now)) *100)-200, 
-           		     mLastTouchY + (float) ( (2+Math.cos( 3*now ) * Math.sin(2*now)) *100)-200, 
-           		     1+i, mPaint);//SystemClock.elapsedRealtime()
-                now -= orbitalSeperation ;
-            	
-            }
+        	if(orbitType == ORBIT_6_KNOT)
+        	{
+        		int orbitalCount = 9;
+                float orbitalSeperation = 90f;
+                
+	            for(int i = 0; i < orbitalCount; i++)
+	            {
+	            	if(i%3 == 0)
+	            	{
+	                    mPaint.setARGB(255, 255, 0, 0);            		
+	            	}
+	            	if(i%3 == 1)
+	            	{
+	                    mPaint.setARGB(255, 0, 255, 0);            		
+	            	}
+	            	if(i%3 == 2)
+	            	{
+	                    mPaint.setARGB(255, 0, 0, 255);            		
+	            	}
+	            	
+	                c.drawCircle( mLastTouchX + (float) ( (2+Math.cos( 3*now ) * Math.cos(2*now)) *100)-200, 
+	           		     mLastTouchY + (float) ( (2+Math.cos( 3*now ) * Math.sin(2*now)) *100)-200, 
+	           		     1+i*2, mPaint);//SystemClock.elapsedRealtime()
+	                now -= orbitalSeperation ;
+	            }
+        	}
+        	if(orbitType == ORBIT_4_KNOT)
+        	{
+        		int orbitalCount = 8;
+                float orbitalSeperation = 67.5f;
+                
+	            for(int i = 0; i < orbitalCount; i++)
+	            {
+	            	if(i%4 == 0)
+	            	{
+	                    mPaint.setARGB(255, 255, 0, 0);            		
+	            	}
+	            	if(i%4 == 1)
+	            	{
+	                    mPaint.setARGB(255, 0, 255, 0);            		
+	            	}
+	            	if(i%4 == 2)
+	            	{
+	                    mPaint.setARGB(255, 0, 0, 255);           		
+	            	}
+	            	if(i%4 == 3)
+	            	{
+	                    mPaint.setARGB(255, 255, 255, 255);          		
+	            	}
+	            	
+	                c.drawCircle( mLastTouchX + (float) ( (2+Math.cos( 2*now ) * Math.cos(now)) *100)-200, 
+	           		     mLastTouchY + (float) ( (2+Math.cos( 2*now ) * Math.sin(now)) *100)-200, 
+	           		     1+i, mPaint);//SystemClock.elapsedRealtime()
+	                now -= orbitalSeperation ;
+	            }
+        	}
+
 //            c.drawCircle( mLastTouchX + (float) ( (2+Math.cos( 3*now ) * Math.cos(2*now)) *100)-200, 
 //       		     mLastTouchY + (float) ( (2+Math.cos( 3*now ) * Math.sin(2*now)) *100)-200, 
 //       		     5, mPaint);//SystemClock.elapsedRealtime()

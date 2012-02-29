@@ -20,4 +20,4 @@
 <!-- The attributes in this XML file provide configuration information -->
 
 <wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
-    android:settingsActivity="com.puzzleduck.targetLiveWallpaper.TargetLiveWallpaperSettings" android:thumbnail="@drawable/target_lwp_icon"/>
+    android:settingsActivity="com.puzzleduck.targetLiveWallpaper.TargetLiveActivity" android:thumbnail="@drawable/target_lwp_icon"/>

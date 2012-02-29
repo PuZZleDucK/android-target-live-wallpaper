@@ -28,6 +28,7 @@ public class TargetLiveWallpaperSettings extends PreferenceActivity
         super.onCreate(newBundle);
         getPreferenceManager().setSharedPreferencesName(TargetLiveWallpaper.SHARED_PREFS_NAME);
         addPreferencesFromResource(R.xml.target_lwp_settings);
+        
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
