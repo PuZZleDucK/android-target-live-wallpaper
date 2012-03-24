@@ -956,7 +956,7 @@ public class TargetLiveWallpaper extends WallpaperService {
 //        void drawSquares(Canvas c) {
 //            int numSquares = mSquares.length;
 ////            mPaint.setColor(Color.CYAN);
-//          	
+//          	 
 ////            Log.d(TAG, "draw suares strt = " + numSquares);
 //            for (int i = 0; i < numSquares; i++) {
 //                ThreeDSquare thisSquare = mSquares[i];
